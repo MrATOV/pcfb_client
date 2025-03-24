@@ -1,0 +1,72 @@
+.dataGenerator {
+    margin-top: 2%;
+}
+
+.dataGenerator > * {
+    margin-bottom: 2%;
+}
+
+.dataGenerator input[type="number"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.dataGenerator input[type="number"]:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.dataGenerator .ranger {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dataGenerator .ranger input[type='range'] {
+    width: 80%;
+}
+
+.dataGenerator input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.dataGenerator input[type="text"]:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.dataGenerator select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.dataGenerator select:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.dataGenerator label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

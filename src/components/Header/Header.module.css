@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: dodgerblue;
+    padding: 0 1.5rem;
+    height: 6vh;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--sub-color);
+  }
+  
+  .header_logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  
+  .header_logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .header_logo h3 {
+    background: linear-gradient(to bottom right, dodgerblue, 40%, darkgray);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+  }

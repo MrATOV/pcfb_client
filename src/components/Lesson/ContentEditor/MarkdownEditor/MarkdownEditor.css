@@ -1,0 +1,17 @@
+.wmde-markdown {
+    font-family: "Liberation Serif", Times, serif;
+    font-size: 18px;
+    color: var(--text-color);
+    text-align: justify;
+    line-height: 1.5;
+    background-color: var(--background-color);
+}
+
+.w-md-editor-toolbar  {
+    background-color: var(--background-color);
+}
+
+.wmde-markdown p {
+    text-indent: 3em;
+    margin: 0;
+}

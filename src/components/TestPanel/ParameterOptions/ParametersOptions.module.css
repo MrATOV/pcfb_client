@@ -1,0 +1,72 @@
+.parametersOptions {
+  width: 18vw;
+  height: 88vh;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-right: 1px solid var(--sub-color); 
+}
+
+.parameterSetContainer {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  border: 1px solid var(--sub-color);
+  border-radius: 5px;
+  max-height: 156px;
+  overflow-y: auto;
+}
+
+.parameterSet {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+  height: 26px;
+  padding: 0 8px;
+}
+
+.parameterSet.active {
+  background-color: var(--sub-color);
+}
+
+.parameterSetText {
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.buttonAdd {
+  margin: 20px 0 0 0;
+  width: 100%;
+  padding: 8px 0;
+  color: white;
+  background: dodgerblue;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: all 0.2s ease;
+}
+
+.buttonAdd:hover {
+  background-color: #333;
+}
+
+.buttonDelete {
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: bolder;
+  transition: all 0.2s ease;
+}
+
+.buttonDelete:hover {
+  background:none;
+  color: red;
+}

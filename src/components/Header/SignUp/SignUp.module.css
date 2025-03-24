@@ -1,0 +1,53 @@
+.logo {
+    width: 80px;
+}
+
+.reg_form {
+    padding: 0% 5% 5%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.reg_form span {
+    text-align: center;
+    font-weight: bold;
+    margin: 15% 0;
+    font-size: 3.5vh;
+}
+
+.reg_form input {
+    display: block;
+    width: 96%;
+    padding: 2%;
+    margin-bottom: 5%;
+    border: 2px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 1.5rem;
+}
+
+.reg_form input:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.reg_form button {
+    display: block;
+    width: 100%;
+    padding: 2%;
+    margin: 0 0 5% 0;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 15%;
+    font-size: 1.5rem;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

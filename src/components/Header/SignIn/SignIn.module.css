@@ -1,0 +1,74 @@
+.logo {
+    width: 80px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.auth_form {
+    padding: 0% 5% 5%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.auth_form span {
+    text-align: center;
+    font-weight: bold;
+    margin: 15% 0;
+    font-size: 3.5vh;
+}
+
+.auth_form input {
+    display: block;
+    width: 100%;
+    padding: 2%;
+    margin-bottom: 5%;
+    border: 2px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 1.5rem;
+    margin-left: 0;
+    box-sizing: border-box;
+}
+
+.auth_form input:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.auth_form button {
+    display: block;
+    width: 100%;
+    padding: 2%;
+    margin: 0;
+}
+
+.unauthorized {
+    color: red;
+    text-align: center;
+    margin-top: 15%;
+    font-size: 1.5rem;
+}
+
+.register {
+    margin-top: 10%;
+}
+
+.register_button {
+    display: block;
+    margin: 0;
+    width: 100%;
+    background: none;
+    text-decoration: underline;
+    color: var(--text-color);
+}
+
+.register_button:hover {
+    color: var(--sub-color);
+    background: none;
+    text-decoration: none;
+}

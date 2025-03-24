@@ -1,0 +1,45 @@
+.dialog {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    width: 30vw;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dialog h3 {
+    margin-top: 0;
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons button {
+    color: white;
+    width: 30%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.buttons button:hover {
+    background-color: #333;
+}
+
+.buttons button:active {
+    transform: scale(0.9);
+}
+
+.buttonYes {
+    background-color: green;
+}
+
+.buttonNo {
+    background-color: darkred;
+}

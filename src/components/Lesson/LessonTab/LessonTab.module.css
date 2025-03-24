@@ -1,0 +1,37 @@
+.tab {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2% 15%;
+}
+
+.addButton {
+    width: 20vw;
+    height: 15vh;
+    margin: 2%;
+    font-size: 7rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.addButton:active {
+    background: transparent;
+}
+
+.title {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+.title:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}

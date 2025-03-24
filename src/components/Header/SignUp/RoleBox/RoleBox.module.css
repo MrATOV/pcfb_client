@@ -1,0 +1,46 @@
+.button {
+    position: relative;
+    padding: 10px 20px;
+    margin: 0 0 5% 0;
+    border: 1px solid var(--sub-color);
+    border-radius: 20px;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 120px;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.7;
+    background: none;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    transition: left 0.3s ease, right 0.3s ease;
+}
+
+.student::before {
+    left: 5px;
+}
+
+.teacher::before {
+    right: 5px;
+}
+
+.student {
+    color: var(--text-color);
+}
+
+.teacher {
+    color: var(--text-color);
+}

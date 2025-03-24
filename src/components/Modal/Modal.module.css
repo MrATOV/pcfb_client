@@ -1,0 +1,30 @@
+.modal {
+    width: 50vw;
+    max-height: 90vh;
+    border: none;
+    border-radius: 10%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.buttonClose {
+    color: var(--text-color);
+    border: none;
+    width: 3vw;
+    height: 4vh;
+    font-weight: bolder;
+    background: none;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    transition: all 0.3s ease;
+}
+
+.buttonClose:hover {
+    color: red;
+    background: none;
+}
+
+.buttonClose:active {
+    transform: scale(0.9);
+}

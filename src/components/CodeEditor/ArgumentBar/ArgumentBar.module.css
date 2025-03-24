@@ -1,0 +1,42 @@
+.bar {
+    width: 15%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-left: 1px solid var(--sub-color);
+    padding: 20px;
+}
+
+.bar h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.bar div {
+    margin: 10px 0;
+}
+
+.bar label {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.bar label span {
+    font-weight: bold;
+}
+
+.bar input[type="text"] {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+.bar input[type="text"]:focus {
+    border-color: dodgerblue;
+    outline: none;
+}

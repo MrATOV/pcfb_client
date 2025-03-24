@@ -1,0 +1,11 @@
+.markdownContainer {
+    font-family: "Liberation Serif", Times, serif;
+    font-size: 18px;
+    color: var(--text-color);
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.markdownContainer p {
+    text-indent: 3em;
+}
