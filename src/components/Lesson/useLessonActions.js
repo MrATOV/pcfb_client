@@ -1,12 +1,14 @@
 import { useState, useCallback } from "react";
 import axios from "/src/config/axiosLessonsConfig";
 
+
 export const useLessonActions = () => {
     const [lessonList, setLessonList] = useState([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [lessonData, setLessonData] = useState([]);
-
+    const fileTypes = ["image", "audio", "video"];
+    
     const fetchAddLesson = useCallback(async () => {
         try {
             const data = { title };
@@ -42,8 +44,8 @@ export const useLessonActions = () => {
         try {
             const response = await axios.get(`/lesson/${index}/data`);
             const data = await Promise.all(response.data.map(async item => {
-                if (item.type === 'image' && !item.content.startsWith("http")) {
-                    item.content = `${axios.defaults.baseURL}/image/${item.content}`;
+                if (fileTypes.includes(item.type) && !item.content.startsWith("http")) {
+                    item.content = `${axios.defaults.baseURL}/${item.content}`;
                 }
                 return item;
             }));
@@ -64,7 +66,8 @@ export const useLessonActions = () => {
 
     const fetchAddLessonDataItem = useCallback(async (item, lesson_id) => {
         const formData = new FormData();
-        if (item.type === 'image' && item.content instanceof File) {
+
+        if (fileTypes.includes(item.type) && item.content instanceof File) {
             formData.append('file', item.content);
             item.content = "";
         }
@@ -82,7 +85,8 @@ export const useLessonActions = () => {
 
     const fetchUpdatelessonDataItem = useCallback(async (item) => {
         const formData = new FormData();
-        if (item.type === 'image' && item.content instanceof File) {
+        
+        if (fileTypes.includes(item.type) && item.content instanceof File) {
             formData.append('file', item.content);
             item.content = "";
         }
@@ -92,7 +96,7 @@ export const useLessonActions = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             if (response.data.filename) {
-                item.content = `${axios.defaults.baseURL}/image/${response.data.filename}`;
+                item.content = `${axios.defaults.baseURL}/${response.data.filename}`;
             }
             await fetchGetLessonData(item.lesson_id);
         } catch (error) {

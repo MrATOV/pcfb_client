@@ -13,7 +13,6 @@ import MatrixView from "./components/File/MatrixView/MatrixView";
 import ImageView from "./components/File/ImageView/ImageView";
 import DataGenerator from "./components/File/DataGenerator/DataGenerator";
 import CodeEditor from "./components/CodeEditor/CodeEditor";
-
 const App = () => {
     const { protectedData, loading } = useContext(Context);
     const [isModalSignInOpen, setIsModalSignInOpen] = useState(false);
