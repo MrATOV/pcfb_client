@@ -12,6 +12,7 @@ import ArrayView from "./components/File/ArrayView/ArrayView";
 import MatrixView from "./components/File/MatrixView/MatrixView";
 import ImageView from "./components/File/ImageView/ImageView";
 import DataGenerator from "./components/File/DataGenerator/DataGenerator";
+import CodeEditor from "./components/CodeEditor/CodeEditor";
 
 const App = () => {
     const { protectedData, loading } = useContext(Context);
@@ -42,7 +43,7 @@ const App = () => {
         setIsModalSignUpOpen(false);
         navigate('/');
     };
-    
+    const [code, setCode] = useState("//");
     if (loading) {
         return <div>Загрузка...</div>
     }
@@ -50,26 +51,27 @@ const App = () => {
     const handleParamsChange = (params) => {
         console.log('Текущие параметры:', params);
       };
-
+      
     return (
         <>
             <Header username={protectedData && protectedData["username"]} />
-            <DataGenerator
+            {/* <DataGenerator
                 onParamsChange={handleParamsChange}
-            />
-            {/* <Routes>
+            /> */}
+            <Routes>
                 <Route path="/" element={<LessonTab/>}/>
                 <Route path="/lesson/:id" element={<LessonData role={protectedData && protectedData["role"]} />} />
                 <Route path="/test" element={<TestPanel/>}/>
                 <Route path="/test/function/:name" element={<TestPanel/>}/>
                 <Route path="*" element={<LessonTab/>}/>
+                <Route path="/code" element={<CodeEditor code={code} setCode={setCode} editable={true}/>}/>
             </Routes>
             <Modal style={{width: '25vw'}} open={isModalSignInOpen} onCloseClick={closeModalSignIn}>
                 <SignIn/>
             </Modal>
             <Modal style={{width: '25vw'}} open={isModalSignUpOpen} onCloseClick={closeModalSignUp}>
                 <SignUp/>
-            </Modal> */}
+            </Modal>
         </>
     )
 };

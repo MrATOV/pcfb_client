@@ -35,7 +35,6 @@ export const useWebSocketConnection = (code, socket, setSocket, setPragmas) => {
               end: s.range.end ? [s.range.end.line - 1, s.range.end.character - 1] : null,
             })) : null
           }));
-          console.log(newPragmas);
           setPragmas(newPragmas);
         } else if (msg.id === 1) {
           ws.send(JSON.stringify(createMessage("initialized")));
