@@ -8,11 +8,10 @@ import { Context } from "./Context";
 import LessonTab from "./components/Lesson/LessonTab/LessonTab";
 import LessonData from "./components/Lesson/LessonData/LessonData";
 import TestPanel from "./components/TestPanel/TestPanel";
-import ArrayView from "./components/File/ArrayView/ArrayView";
-import MatrixView from "./components/File/MatrixView/MatrixView";
-import ImageView from "./components/File/ImageView/ImageView";
-import DataGenerator from "./components/File/DataGenerator/DataGenerator";
 import CodeEditor from "./components/CodeEditor/CodeEditor";
+import TestResult from "./components/TestResult/TestResult";
+import FileField from './components/FileField/FileField';
+
 const App = () => {
     const { protectedData, loading } = useContext(Context);
     const [isModalSignInOpen, setIsModalSignInOpen] = useState(false);
@@ -42,14 +41,42 @@ const App = () => {
         setIsModalSignUpOpen(false);
         navigate('/');
     };
-    const [code, setCode] = useState("//");
+    const [code, setCode] = useState(`
+        ////
+#include <ParallelTesting/TestOptions.h>
+#include <ParallelTesting/TestFunctions.h>
+#include <TestingData/DataImage.h>
+#include <iostream>
+
+void func(RGBImage** img, size_t t, size_t b) {
+    for(int y = 0; y < t; y++) {
+        for(int x = 0; x < b; x++) {
+            img[y][x].R = 255;
+        }
+    }
+}
+
+int main() {
+    TestOptions opt(
+        {1, 2}, 
+        2, 
+        Alpha::percent90, 
+        IntervalType::CD, 
+        CalcValue::Mean, 
+        SaveOption::saveAll, 
+        true
+    );
+    DataManager man(DataImage("images.jfif"));
+    FunctionManager fm(func);
+    TestFunctions test(opt, man, fm);
+    test.run();
+    return 0;
+}
+        
+        `);
     if (loading) {
         return <div>Загрузка...</div>
     }
-
-    const handleParamsChange = (params) => {
-        console.log('Текущие параметры:', params);
-      };
       
     return (
         <>
@@ -60,8 +87,9 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<LessonTab/>}/>
                 <Route path="/lesson/:id" element={<LessonData role={protectedData && protectedData["role"]} />} />
-                <Route path="/test" element={<TestPanel/>}/>
-                <Route path="/test/function/:name" element={<TestPanel/>}/>
+                {/* <Route path="/test" element={<TestPanel/>}/>
+                <Route path="/test/:name" element={<TestPanel/>}/> */}
+                <Route path="/data" element={<FileField/>} />
                 <Route path="*" element={<LessonTab/>}/>
                 <Route path="/code" element={<CodeEditor code={code} setCode={setCode} editable={true}/>}/>
             </Routes>

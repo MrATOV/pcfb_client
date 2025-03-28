@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from '/src/config/axiosLessonsConfig';
 
-const ImageView = ({ filename }) => {
+const ImageView = ({ url }) => {
     const [scale, setScale] = useState(1);
     const [imageUrl, setImageUrl] = useState(null)
 
     useEffect(() => {
-        setImageUrl(`${axios.defaults.baseURL}/image/${filename}`);
-    }, [filename]);
+        if (url) {
+            setImageUrl(url);
+        }
+    }, [url]);
 
     const handleZoomIn = () => {
         setScale(scale * 1.2);

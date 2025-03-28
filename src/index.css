@@ -1,11 +1,13 @@
 :root {
   --background-color: white;
+  --subbackground-color: #eee;
   --text-color: black;
   --sub-color: #ccc;
 }
 
 [data-theme="dark"] {
   --background-color: #1e1e1e;
+  --subbackground-color: #333;
   --text-color: white;
   --sub-color: #333;
 }

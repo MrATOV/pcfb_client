@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 4vh;
+    color: var(--text-color);
+}
+
+.resultButtons {
+    display: flex;
+}
+
+.resultButtons button {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+}
+
+.resultButtons button.active {
+    background-color: dodgerblue;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.test_item {
+    background-color: var(--subbackground-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item_title {
+    text-align: center;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.item_args {
+    text-align: center;
+    margin: 0;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    font-style: italic;
+    color: var(--text-color);
+}

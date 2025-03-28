@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from "./DataGenerator.module.css";
 
-const DataGenerator = ({ onParamsChange }) => {
-    const [dataDimension, setDataDimension] = useState(1);
+const DataGenerator = ({ onParamsChange, type }) => {
     const [dimensions, setDimensions] = useState([1]);
-    const [dataType, setDataType] = useState('int');
+    const [dataType, setDataType] = useState(0);
     const [generationType, setGenerationType] = useState('random');
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(100);
@@ -14,7 +13,6 @@ const DataGenerator = ({ onParamsChange }) => {
 
     const handleParamsChange = () => {
         const params = {
-            dataDimension,
             dataType,
             generationType,
             dimensions,
@@ -39,44 +37,62 @@ const DataGenerator = ({ onParamsChange }) => {
     };
 
     useEffect(() => {
-        const newDimensions = new Array(dataDimension).fill(1);
+        const newDimensions = new Array(type === 'matrix' ? 2 : 1).fill(1);
         setDimensions(newDimensions);
-    }, [dataDimension]);
+    }, [type]);
 
     useEffect(() => {
         handleParamsChange();
-    }, [dataDimension, dataType, generationType, minValue, maxValue, startValue, step, incrementInterval, dimensions]);
+    }, [dataType, generationType, minValue, maxValue, startValue, step, incrementInterval, dimensions]);
 
     return (
         <div className={styles.dataGenerator}>
-            <label>
-                Размерность данных:
-                <input
-                    type="number"
-                    value={dataDimension}
-                    onChange={(e) => setDataDimension(parseInt(e.target.value, 10))}
-                    min={1}
-                    max={10}
-                />
-            </label>
-
-            {dimensions.map((dimension, index) => (
-                <label key={index}>
-                    Размер {index + 1}:
+            {dimensions.length === 2 ? (
+                <>
+                    <label>
+                        Количество строк:
+                        <input
+                            type="number"
+                            value={dimensions[0]}
+                            onChange={(e) => handleDimensionChange(0, e.target.value)}
+                            min={1}
+                        />
+                    </label>
+                    <label>
+                        Количество столбцов:
+                        <input
+                            type="number"
+                            value={dimensions[1]}
+                            onChange={(e) => handleDimensionChange(1, e.target.value)}
+                            min={1}
+                        />
+                    </label>
+                </>
+            ) : (
+                <label>
+                    Количество элементов:
                     <input
                         type="number"
-                        value={dimension}
-                        onChange={(e) => handleDimensionChange(index, e.target.value)}
+                        value={dimensions[0]}
+                        onChange={(e) => handleDimensionChange(0, e.target.value)}
                         min={1}
                     />
-                </label>
-            ))}
+                </label>  
+            )}
 
             <label>
                 Тип данных:
                 <select value={dataType} onChange={(e) => setDataType(e.target.value)}>
-                    <option value="int">Целые числа</option>
-                    <option value="float">Вещественные числа</option>
+                    <option value={0}>Целые числа "char"</option>
+                    <option value={1}>Целые числа "unsigned char"</option>
+                    <option value={2}>Целые числа "short"</option>
+                    <option value={3}>Целые числа "unsigned short"</option>
+                    <option value={4}>Целые числа "int"</option>
+                    <option value={5}>Целые числа "unsgined int"</option>
+                    <option value={6}>Целые числа "long"</option>
+                    <option value={7}>Целые числа "unsigned long"</option>
+                    <option value={8}>Вещественные числа "float"</option>
+                    <option value={9}>Вещественные числа "double"</option>
                 </select>
             </label>
 

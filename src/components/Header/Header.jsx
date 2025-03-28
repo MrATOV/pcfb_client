@@ -16,7 +16,7 @@ const Header = ({username}) => {
                 <img src={logo} alt="Лого" />
                 <h3>Потом назвать</h3>
             </Link>
-            <button onClick={toggleTheme}>Еблысь</button>
+            <button onClick={toggleTheme}>Тема</button>
             <div className={styles.right}>
                 {username ? <Unauthorize>{username}</Unauthorize> : <Authorize/>}
             </div>

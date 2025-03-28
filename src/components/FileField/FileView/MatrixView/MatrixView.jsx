@@ -15,14 +15,19 @@ const MatrixView = ({ filename }) => {
 
     const fetchGetData = async () => {
         try {
-            const response = await axios.get(`/matrix/${filename}`, {
+            const accessToken = localStorage.getItem("access_token");
+            const response = await axios.get(`/data/matrix/${filename}`, {
                 params: {
                     page_row: currentPageRow,
                     page_col: currentPageCol,
                     limit_row: limitRow,
                     limit_col: limitCol,
                 },
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                },
             });
+            console.log(response.data);
             setData(response.data.data);
             setTotalPagesRow(response.data.total_pages_row);
             setTotalPagesCol(response.data.total_pages_col);
@@ -114,31 +119,31 @@ const MatrixView = ({ filename }) => {
                         </div>
                     ))
                 ) : (
-                    <div>Loading...</div>
+                    <div>Загрузка...</div>
                 )}
             </div>
 
             <div className={styles.paginationRow}>
                 <button onClick={handlePrevPageRow} disabled={currentPageRow === 1}>
-                    Previous Row
+                    ←
                 </button>
                 <span>
-                    Row Page {currentPageRow} of {totalPagesRow}
+                    Страница {currentPageRow} из {totalPagesRow}
                 </span>
                 <button onClick={handleNextPageRow} disabled={currentPageRow === totalPagesRow}>
-                    Next Row
+                    →
                 </button>
             </div>
 
             <div className={styles.paginationCol}>
                 <button onClick={handlePrevPageCol} disabled={currentPageCol === 1}>
-                    Previous Col
+                    ↑
                 </button>
                 <span>
-                    Col Page {currentPageCol} of {totalPagesCol}
+                    Страница {currentPageCol} из {totalPagesCol}
                 </span>
                 <button onClick={handleNextPageCol} disabled={currentPageCol === totalPagesCol}>
-                    Next Col
+                    ↓
                 </button>
             </div>
         </div>

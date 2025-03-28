@@ -11,11 +11,15 @@ const ArrayView = ({ filename }) => {
 
     const fetchGetData = async () => {
         try {
-            const response = await axios.get(`/array/${filename}`, {
+            const accessToken = localStorage.getItem("access_token");
+            const response = await axios.get(`/data/array/${filename}`, {
                 params: {
                     offset: (currentPage - 1) * limit,
                     limit: limit,
                 },
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
             });
             setData(response.data.data);
             setTotalPages(response.data.total_pages);
@@ -73,19 +77,19 @@ const ArrayView = ({ filename }) => {
                         </div>
                     ))
                 ) : (
-                    <div>Loading...</div>
+                    <div>Загрузка...</div>
                 )}
             </div>
 
             <div className={styles.pagination}>
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    Previous
+                    ←
                 </button>
                 <span>
-                    Page {currentPage} of {totalPages}
+                    Страница {currentPage} из {totalPages}
                 </span>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next
+                    →
                 </button>
             </div>
         </div>

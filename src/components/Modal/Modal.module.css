@@ -2,9 +2,10 @@
     width: 50vw;
     max-height: 90vh;
     border: none;
-    border-radius: 10%;
+    border-radius: 30px;
     background-color: var(--background-color);
     color: var(--text-color);
+    z-index: 100000;
 }
 
 .buttonClose {
@@ -15,8 +16,8 @@
     font-weight: bolder;
     background: none;
     position: absolute;
-    top: 5%;
-    right: 5%;
+    top: 10px;
+    right: 10px;
     transition: all 0.3s ease;
 }
 

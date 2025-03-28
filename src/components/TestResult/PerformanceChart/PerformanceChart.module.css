@@ -1,0 +1,23 @@
+.chart_wrapper {
+    margin-top: 20px;
+}
+
+.metric_selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.metric_button:hover {
+    background-color: var(--sub-color);
+}
+
+.metric_button.active {
+    background-color: var(--sub-color);
+    color: white;
+}
+
+.chart_container {
+    overflow: hidden;
+}
