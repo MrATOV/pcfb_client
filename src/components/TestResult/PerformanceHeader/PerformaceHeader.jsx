@@ -11,12 +11,12 @@ import tableIconDark from "/src/assets/icons/dark/table.svg";
 import chartIcon from "/src/assets/icons/chart.svg";
 import chartIconDark from "/src/assets/icons/dark/chart.svg";
 
-const PerformanceHeader = ({testName, setTestName, onSaveClick, onGenerateClick, showChart, setShowChart}) => {
+const PerformanceHeader = ({title, testName, setTestName, onSaveClick, onGenerateClick, showChart, setShowChart}) => {
     const { isDark } = useContext(Context);
-
+    
     return (
         <div className={styles.header}>
-            {onSaveClick ? (
+            {!title ? (
                 <>
                     <input
                         type="text"
@@ -35,7 +35,7 @@ const PerformanceHeader = ({testName, setTestName, onSaveClick, onGenerateClick,
                     </div>
                 </>
             ) : (
-                <h1>Результаты тестирования производительности</h1>
+                <h1>{title}</h1>
             )}
             
             <div className={styles.actions}>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './GeneralOptions.module.css';
 
-const GeneralOptions = ({ declaration, onOptionsChange }) => {
-    const threadNumber = 16;
+const GeneralOptions = ({ threadNumber, declaration, onOptionsChange }) => {
     const [settings, setSettings] = useState({
         iterations: 1,
         threads: [],

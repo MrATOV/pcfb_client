@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ArrayView.module.css';
 import axios from "/src/config/axiosLessonsConfig";
 
-const ArrayView = ({ filename }) => {
+const ArrayView = ({ filename, path = "default" }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(2);
     const [data, setData] = useState(null);
@@ -14,6 +14,7 @@ const ArrayView = ({ filename }) => {
             const accessToken = localStorage.getItem("access_token");
             const response = await axios.get(`/data/array/${filename}`, {
                 params: {
+                    path: path,
                     offset: (currentPage - 1) * limit,
                     limit: limit,
                 },

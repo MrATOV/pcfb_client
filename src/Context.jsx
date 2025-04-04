@@ -29,6 +29,12 @@ export const ContextProvider = ({children}) => {
 
     useEffect(() => {
         fetchProtectedData();
+        
+        const intervalId = setInterval(() => {
+            fetchProtectedData();
+        }, 60000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {

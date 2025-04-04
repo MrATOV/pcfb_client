@@ -3,13 +3,13 @@ import ArrayView from './ArrayView/ArrayView';
 import MatrixView from './MatrixView/MatrixView';
 import ImageView from './ImageView/ImageView';
 
-const FileView = ({open, onCloseClick, type, content}) => {
+const FileView = ({open, onCloseClick, type, content, path = 'default'}) => {
     const renderView = () => {
         switch (type) {
             case 'array':
-                return <ArrayView filename={content}/>;
+                return <ArrayView filename={content} path={path}/>;
             case 'matrix':
-                return <MatrixView filename={content}/>;
+                return <MatrixView filename={content} path={path}/>;
             case 'text':
                 return <textarea readOnly value={content}/>;
             case 'image':

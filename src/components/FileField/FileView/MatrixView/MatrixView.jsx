@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './MatrixView.module.css';
 import axios from "/src/config/axiosLessonsConfig";
 
-const MatrixView = ({ filename }) => {
+const MatrixView = ({ filename, path = 'default' }) => {
     const [currentPageRow, setCurrentPageRow] = useState(1);
     const [currentPageCol, setCurrentPageCol] = useState(1);
     const [limitRow, setLimitRow] = useState(10);
@@ -18,6 +18,7 @@ const MatrixView = ({ filename }) => {
             const accessToken = localStorage.getItem("access_token");
             const response = await axios.get(`/data/matrix/${filename}`, {
                 params: {
+                    path: path,
                     page_row: currentPageRow,
                     page_col: currentPageCol,
                     limit_row: limitRow,

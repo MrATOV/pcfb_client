@@ -6,7 +6,7 @@ const LessonView = ({data}) => {
     return (
         <div className={styles.container}>
             {data && data.map((item) => (
-                <div className={styles.item} key={item.id}>
+                <div className={styles.previewItem} key={item.id}>
                     <ContentBlock type={item.type} content={item.content}/>
                 </div>
             ))}

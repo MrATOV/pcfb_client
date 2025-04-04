@@ -21,3 +21,19 @@
 .chart_container {
     overflow: hidden;
 }
+
+.procData {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.procData:hover {
+    background: transparent;
+    filter: grayscale(100%);
+}
+
+.procData img {
+    height: 2rem;
+    width: auto;
+}

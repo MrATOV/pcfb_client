@@ -1,15 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '/src/Context';
-//import { useParams, useNavigate } from 'react-router-dom';
 import GeneralOptions from './GeneralOptions/GeneralOptions';
 import ParametersOptions from './ParameterOptions/ParametersOptions';
 import FileField from '../FileField/FileField';
 import axios from '/src/config/axiosCompilerConfig.js';
 import Dialog from '../Dialog/Dialog';
 
-const TestPanel = ({code, open, onNoClick, onYesClick}) => {
+const TestPanel = ({threadNumber = 1, code, open, onNoClick, onYesClick}) => {
     const [name, setName] = useState(null);
-    //const navigate = useNavigate();
     const { protectedData } = useContext(Context);
     const [options, setOptions] = useState(null);
     const [declaration, setDeclaration] = useState(null);
@@ -65,7 +63,6 @@ const TestPanel = ({code, open, onNoClick, onYesClick}) => {
         setOptions(null);
         setParameterSets([]);
         setName(declaration.name);
-        //navigate(`/test/function/${declaration.name}`);
     };
 
     const handleGenerateClick = async () => {
@@ -98,15 +95,16 @@ const TestPanel = ({code, open, onNoClick, onYesClick}) => {
     }
     
     return (
-        <Dialog style={{width: "90vw", height: "90vh"}} open={open} onNoClick={handleNoClick} onYesClick={handleGenerateClick}>
+        <Dialog title="Генератор тестов" style={{width: "90vw"}} open={open} onNoClick={handleNoClick} onYesClick={handleGenerateClick}>
             {(functionsDeclarations && name === null) && functionsDeclarations.map((declaration, id) => (
                 <button key={id} onClick={() => handleOpenFunctionOptionsClick(declaration)}>
                     {declaration.name}
                 </button>
             ))}
         {name && (
-            <div style={{display: "flex", height: "90vh"}}>
+            <div style={{display: "flex", height: "80vh"}}>
                 <GeneralOptions
+                    threadNumber={threadNumber}
                     declaration={declaration}
                     onOptionsChange={setOptions}
                 />
@@ -114,7 +112,7 @@ const TestPanel = ({code, open, onNoClick, onYesClick}) => {
                     declaration={declaration}
                     onParameterSetChange={setParameterSets}
                 />
-                <FileField selectItems={selectItems} onSelectItems={setSelectItems} type={declaration.type}/>
+                <FileField selectItems={selectItems} onSelectItems={setSelectItems} type={declaration.type.split("(")[0]}/>
             </div>
         )}
         </Dialog>

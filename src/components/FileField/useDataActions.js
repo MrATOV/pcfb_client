@@ -25,13 +25,16 @@ export const useDataActions = (type) => {
         }
     }, []);
     
-    const fetchGetDataContent = useCallback(async (type, filename) => {
+    const fetchGetDataContent = useCallback(async (type, filename, path = 'default') => {
         try {
             const accessToken = localStorage.getItem("access_token");
             if (['array', 'matrix'].includes(type)) {
                 setDataContent(filename);
             } else if (type === 'text') {
                 const response = await axios.get(`/data/${type}/${filename}`, {
+                    params: {
+                        'path': path
+                    },
                     headers: {
                         "Authorization": `Bearer ${accessToken}`,
                     },
@@ -39,6 +42,9 @@ export const useDataActions = (type) => {
                 setDataContent(response.data);
             } else {
                 const response = await axios.get(`/data/${type}/${filename}`, {
+                    params: {
+                        'path': path
+                    },
                     responseType: "blob",
                     headers: {
                         "Authorization": `Bearer ${accessToken}`,

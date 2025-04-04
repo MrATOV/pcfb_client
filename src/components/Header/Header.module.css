@@ -4,33 +4,61 @@
     align-items: center;
     color: dodgerblue;
     padding: 0 1.5rem;
-    height: 6vh;
-    background-color: var(--background-color);
+    height: 50px;
+    background-color: var(--header-color);
     border-bottom: 1px solid var(--sub-color);
-  }
-  
-  .header_logo {
+}
+    
+.header button {
+    height: 2rem;
+    width: 110px;
+    font-size: 1.1rem;
+    margin: 0 0.5rem 0 0;
+    padding: 0;
+}
+
+.header button:active {
+    transform: scale(0.9);
+}
+
+.header .settingsButton {
+    background: transparent;
+    width:auto;
+}
+
+.settingsButton img {
+    margin: 0;
+}
+
+.settingsButton:hover {
+    background:transparent;
+    filter: grayscale(100%);
+}
+
+.settingsButton:active {
+    transform: scale(0.9);
+}
+
+.header_logo {
     display: flex;
     align-items: center;
     text-decoration: none;
     margin-right: auto;
-  }
-  
-  .header_logo img {
+}
+
+.header_logo img {
     width: 40px;
     height: 40px;
     margin-right: 10px;
-  }
-  
-  .header_logo h3 {
-    background: linear-gradient(to bottom right, dodgerblue, 40%, darkgray);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 32px;
-  }
+}
 
-  .right {
+.header_logo h3 {
+    color: dodgerblue;
+    font-size: 1.3rem;
+    width: 60%;
+}
+
+.right {
     display: flex;
     align-items: center;
-  }
+}

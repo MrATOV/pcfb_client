@@ -1,8 +1,7 @@
 .tab {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 2% 15%;
+    width: 80vw;
+    flex-direction: column;
 }
 
 .addButton {
@@ -32,6 +31,30 @@
 }
 
 .title:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.accessCheck {
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.textInput {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--sub-color);
+    box-sizing: border-box;
+    resize: none;
+    overflow: auto;
+    white-space: nowrap;
+    margin-top: 1rem;
+    border-radius: 3px;
+}
+
+.textInput:focus {
     border: 1px solid dodgerblue;
     outline: none;
 }

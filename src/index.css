@@ -3,6 +3,7 @@
   --subbackground-color: #eee;
   --text-color: black;
   --sub-color: #ccc;
+  --header-color: #eee;
 }
 
 [data-theme="dark"] {
@@ -10,6 +11,7 @@
   --subbackground-color: #333;
   --text-color: white;
   --sub-color: #333;
+  --header-color: #121212;
 }
 
 body {

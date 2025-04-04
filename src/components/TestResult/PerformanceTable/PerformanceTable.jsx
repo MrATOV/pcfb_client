@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './PerformanceTable.module.css';
+import dataLogo from '/src/assets/data.svg';
 
-const PerformanceTable = ({ performance }) => {
+
+const PerformanceTable = ({ performance, onProcDataClick }) => {
     return (
         <div className={styles.performance_table}>
             <table>
@@ -12,6 +14,7 @@ const PerformanceTable = ({ performance }) => {
                         <th>Ускорение</th>
                         <th>Стоимость</th>
                         <th>Эффективность</th>
+                        {performance[0].processing_data && <th>Данные</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +25,10 @@ const PerformanceTable = ({ performance }) => {
                             <td>{perf.acceleration.toFixed(3)}</td>
                             <td>{perf.cost.toFixed(6)}</td>
                             <td>{perf.efficiency.toFixed(3)}</td>
+                            {perf.processing_data && 
+                            <td onClick={() => onProcDataClick(perf.processing_data)} style={{padding: "0 1rem"}}>
+                                    <img style={{height: "2rem"}} src={dataLogo} alt="Данные"/>
+                            </td>}
                         </tr>
                     ))}
                 </tbody>

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '/src/Context';
 import styles from './Header.module.css';
-import logo from '/src/assets/logo.svg'
+import logo from '/src/assets/logo.svg';
+import settings from '/src/assets/settings.svg';
 import Authorize from './Authorize/Authorize';
 import Unauthorize from './Unauthorize/Unauthorize';
 
@@ -14,9 +15,9 @@ const Header = ({username}) => {
         <header className={styles.header}>
             <Link to='/' className={styles.header_logo}>
                 <img src={logo} alt="Лого" />
-                <h3>Потом назвать</h3>
+                <h3>Параллельные вычисления для начинающих</h3>
             </Link>
-            <button onClick={toggleTheme}>Тема</button>
+            <button className={styles.settingsButton} title="Настройки" onClick={toggleTheme}><img src={settings} alt="Настройки"/></button>
             <div className={styles.right}>
                 {username ? <Unauthorize>{username}</Unauthorize> : <Authorize/>}
             </div>

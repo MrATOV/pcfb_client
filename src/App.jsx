@@ -5,12 +5,17 @@ import Modal from "./components/Modal/Modal";
 import { useContext, useState, useEffect} from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { Context } from "./Context";
+import Preview from "./components/Preview/Preview";
 import LessonTab from "./components/Lesson/LessonTab/LessonTab";
+import LessonTabPublic from "./components/Lesson/LessonTab/LessonTabPublic";
 import LessonData from "./components/Lesson/LessonData/LessonData";
 import TestPanel from "./components/TestPanel/TestPanel";
 import CodeEditor from "./components/CodeEditor/CodeEditor";
-import TestResult from "./components/TestResult/TestResult";
+import TestList from "./components/TestResult/TestList";
 import FileField from './components/FileField/FileField';
+import LessonList from './components/Lesson/LessonList';
+import SubscribeLinkHandler from './components/LinkHandler/SubscribeLinkHandler';
+import CodeLinkHandler from './components/LinkHandler/CodeLinkHandler';
 
 const App = () => {
     const { protectedData, loading } = useContext(Context);
@@ -81,17 +86,22 @@ int main() {
     return (
         <>
             <Header username={protectedData && protectedData["username"]} />
-            {/* <DataGenerator
-                onParamsChange={handleParamsChange}
-            /> */}
             <Routes>
-                <Route path="/" element={<LessonTab/>}/>
-                <Route path="/lesson/:id" element={<LessonData role={protectedData && protectedData["role"]} />} />
+                <Route path="*" element={<Preview/>}/>
+                <Route path="/lessons" element={<LessonTabPublic/>}/>
+                <Route path="/lesson/:id" element={<LessonData />} />
+                <Route path="/subscribe/:token" element={<SubscribeLinkHandler />} />
+                {protectedData &&
+                <>
+                    <Route path="/" element={<LessonList role={protectedData["role"]}/>}/>
+                    <Route path="/data" element={<FileField/>} />
+                    <Route path="/code" element={<CodeEditor code={code} setCode={setCode} editable={true}/>}/>
+                    <Route path="/code/:type/:taskId" element={<CodeLinkHandler/>} />
+                    <Route path="/results" element={<TestList />}/>
+                </>
+                }
                 {/* <Route path="/test" element={<TestPanel/>}/>
                 <Route path="/test/:name" element={<TestPanel/>}/> */}
-                <Route path="/data" element={<FileField/>} />
-                <Route path="*" element={<LessonTab/>}/>
-                <Route path="/code" element={<CodeEditor code={code} setCode={setCode} editable={true}/>}/>
             </Routes>
             <Modal style={{width: '25vw'}} open={isModalSignInOpen} onCloseClick={closeModalSignIn}>
                 <SignIn/>

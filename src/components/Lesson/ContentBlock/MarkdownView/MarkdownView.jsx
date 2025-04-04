@@ -3,9 +3,9 @@ import remarkGfm from 'remark-gfm';
 import rehypeSanitize from 'rehype-sanitize';
 import styles from './MarkdownView.module.css';
 
-const MarkdownView = ({content}) => {
+const MarkdownView = ({content, className}) => {
     return (
-        <div className={styles.markdownContainer}>
+        <div className={className ? className : styles.markdownContainer}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeSanitize]}

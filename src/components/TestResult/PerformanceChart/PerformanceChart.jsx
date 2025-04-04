@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import styles from './PerformanceChart.module.css';
+import dataLogo from '/src/assets/data.svg';
 
 const METRIC_LABELS = {
     time: 'Время (сек)',
@@ -33,7 +34,7 @@ const PerformanceChart = ({ data, selectedMetric, onMetricChange }) => {
         tick: { fill: 'var(--text-color)' },
         axisLabel: { fill: 'var(--text-color)' }
     };
-
+console.log(data);
     return (
         <div className={styles.chart_wrapper}>
             <div className={styles.metric_selector}>

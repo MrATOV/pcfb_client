@@ -12,6 +12,13 @@
     padding: 1%;
 }
 
+.previewItem {
+    width: 100%;
+    margin-bottom: 1%;
+    height: auto;
+    padding: 1%;
+}
+
 .itemUtils {
     border-bottom: 1px solid var(--sub-color);
     display: flex;
