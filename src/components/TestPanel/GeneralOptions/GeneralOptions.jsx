@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './GeneralOptions.module.css';
 
-const GeneralOptions = ({ declaration, onOptionsChange }) => {
-    const threadNumber = 16;
+const GeneralOptions = ({ threadNumber, declaration, onOptionsChange }) => {
     const [settings, setSettings] = useState({
         iterations: 1,
         threads: [],
@@ -19,8 +18,8 @@ const GeneralOptions = ({ declaration, onOptionsChange }) => {
 
     useEffect(() => {
         setSettings({
-            iterations: 1,
-            threads: [],
+            iterations: 2,
+            threads: [1, 2],
             koefficient: 0,
             calculate: 0,
             alpha: 0,
@@ -56,7 +55,7 @@ const GeneralOptions = ({ declaration, onOptionsChange }) => {
 
     return (
         <div className={styles.options}>
-            <h2>Общие настройки</h2>
+            <h3>Общие настройки</h3>
             <label>Количество потоков</label>
             <div>
                 {Array.from({ length: threadNumber }, (_, id) => (

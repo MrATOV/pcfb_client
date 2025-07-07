@@ -4,6 +4,7 @@ import audioIcon from '/src/assets/icons/dark/audio.svg';
 import videoIcon from '/src/assets/icons/dark/video.svg';
 import textIcon from '/src/assets/icons/dark/text.svg';
 import codeIcon from '/src/assets/icons/dark/code.svg';
+import styles from './ContentTools.module.css';
 
 const initialContents = {
     header: "",
@@ -25,7 +26,7 @@ const ContentTools = ({ onAddNewItem }) => {
     }
 
     return (
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div className={styles.contentTools}>
             <button onClick={() => addNewContentBlock("header")}>
                 <img src={headerIcon} alt=""/>
                 Заголовок

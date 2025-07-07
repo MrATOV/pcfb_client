@@ -1,0 +1,44 @@
+.chart_wrapper {
+    margin-top: 20px;
+}
+
+.metric_selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.metric_button {
+    font-size: 18px;
+}
+
+.metric_button:hover {
+    background-color: var(--sub-color);
+}
+
+.metric_button.active {
+    background-color: var(--sub-color);
+    color: white;
+}
+
+.chart_container {
+    overflow: hidden;
+}
+
+.procData {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.procData:hover {
+    background: transparent;
+    filter: grayscale(100%);
+}
+
+.procData img {
+    height: 2rem;
+    width: auto;
+}

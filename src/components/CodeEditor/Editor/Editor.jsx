@@ -12,7 +12,7 @@ import { useWebSocketConnection, ChangeCode } from './useWebSocketConnection';
 import { languageServer } from 'codemirror-languageserver';
 import {Context} from '/src/Context';
 
-const Editor = ({code, setCode}) => {
+const Editor = ({code, setCode, onDisableSave}) => {
     const [socket, setSocket] = useState(null);
     const [editorView, setEditorView] = useState(null);
     const [pragmas, setPragmas] = useState([]);
@@ -52,7 +52,7 @@ const Editor = ({code, setCode}) => {
                 style={{flex: 1, overflow: "hidden"}}
                 value={code}
                 extensions={extensions}
-                onChange={(newCode, viewUpdate) => ChangeCode(newCode, viewUpdate, socket, setCode, documentVersion, ANALYSIS_FILE_URI)}
+                onChange={(newCode, viewUpdate) => ChangeCode(newCode, viewUpdate, socket, setCode, onDisableSave, documentVersion, ANALYSIS_FILE_URI)}
                 theme={isDark ? vscodeDark : vscodeLight}
                 onCreateEditor={setEditorView}
                 basicSetup={{ 

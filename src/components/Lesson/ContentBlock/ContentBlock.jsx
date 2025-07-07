@@ -4,13 +4,16 @@ import HeaderView from "./HeaderView/HeaderView";
 import ImageView from "./ImageView/ImageView";
 import MarkdownView from "./MarkdownView/MarkdownView";
 import VideoView from "./VideoView/VideoView";
+import {useLessonActions} from '../useLessonActions';
 
 const ContentBlock = ({type, content}) => {
+    const {lessonTeacherId} = useLessonActions();
+
     switch(type) {
         case "audio":
             return <AudioView content={content} />;
         case "code":
-            return <CodeEditor code={content} />;
+            return <div style={{border: "1px solid var(--sub-color)"}}><CodeEditor code={content} teacherId={lessonTeacherId} /></div>;
         case "header":
             return <HeaderView content={content} />;
         case "image":

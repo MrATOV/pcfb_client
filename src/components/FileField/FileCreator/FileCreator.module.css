@@ -1,0 +1,88 @@
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.buttons button {
+    width: 9vw;
+    font-size: 1.9vh;
+    margin: 2% 0 2% 0;
+}
+
+.buttons button.active {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.uploadSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+}
+
+.uploadSection:hover {
+    border-color: #007bff;
+}
+
+
+.fileInput {
+    display: none;
+}
+
+.textInput {
+    height: 20vh;
+    min-height: 10vh;
+    width: 100%;
+    font-family: monospace;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--sub-color);
+    box-sizing: border-box;
+    resize: none;
+    overflow: auto;
+    white-space: nowrap;
+    margin-top: 2%;
+    border-radius: 8px;
+}
+
+.textInput:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}
+
+.previewMedia {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 4px;
+}
+
+.filenameInput {
+    display: block;
+    width: 100%;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 1.2rem;
+    margin-left: 0;
+    box-sizing: border-box;
+}
+
+.filenameInput:focus {
+    border: 1px solid dodgerblue;
+    outline: none;
+}

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from '/src/config/axiosLessonsConfig';
+import axios from '/src/config/axiosUsersConfig';
 
 export const Context = createContext();
 
@@ -19,7 +19,17 @@ export const ContextProvider = ({children}) => {
                     "Authorization": `Bearer ${accessToken}`,
                 },
             });
-            setProtectedData(response.data);
+            const user = response.data;
+            if (user.avatar) {
+                user.avatar = `${axios.defaults.baseURL}/${user.avatar}`;
+            };
+            
+            setProtectedData(prev => {
+                if (JSON.stringify(prev) != JSON.stringify(user)) {
+                    return user;
+                }
+                return prev;
+            });
         } catch (error) {
             setProtectedData(null);
         } finally {
@@ -29,6 +39,12 @@ export const ContextProvider = ({children}) => {
 
     useEffect(() => {
         fetchProtectedData();
+        
+        const intervalId = setInterval(() => {
+            fetchProtectedData();
+        }, 60000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {

@@ -1,0 +1,32 @@
+.buttons {
+    display: flex;
+    height: 5%;
+}
+
+.buttons button {
+    margin: 0 1px;
+    padding: 1px 20px;
+}
+
+.buttons button.active {
+    background: none;
+    color: var(--text-color);
+}
+
+.content {
+    height: 95%;
+    overflow: auto;
+}
+
+.content code {
+    font-size: 1rem;
+    background-color: var(--subbackground-color);
+    border-radius: 5px;
+    padding: 1px 8px;
+}
+
+.content pre {
+    background-color: var(--subbackground-color);
+    padding: 3px 10px;
+    border-radius: 7px;
+}

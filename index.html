@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="dialog"></div>
-    <div id="modal"></div>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Параллельные вычисления для начинающих</title>
+    </head>
+    <body>
+        <div id="dialog"></div>
+        <div id="modal"></div>
+        <div id="root" style="height: 100vh; width: 100vw; display: flex; flex-direction: column; overflow: hidden"></div>
+        <div id="toast-container" style="position: fixed; top: 60px; right: 0px; display: flex; flex-direction: column; align-items: flex-end; padding: 0px 20px; z-index: 1000;"></div>
+        <script type="module" src="/src/main.jsx"></script>
+    </body>
 </html>

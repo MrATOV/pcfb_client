@@ -1,0 +1,25 @@
+.performance_table {
+    overflow-x: auto;
+}
+
+.performance_table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.performance_table th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--background-color);
+}
+
+.performance_table th {
+    background-color: dodgerblue;
+    font-weight: 600;
+    color: white;
+}
+
+.performance_table tr:hover {
+    background-color: var(--background-color);
+}

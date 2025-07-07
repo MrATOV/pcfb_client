@@ -1,13 +1,25 @@
 :root {
+  --background: linear-gradient(#eee 55%,rgba(30, 144, 255, 0.3));
   --background-color: white;
+  --subbackground-color: #ddd;
   --text-color: black;
+  --subtext-color: #2c3e50;
   --sub-color: #ccc;
+  --header-color: #eee;
+  --warning-color: rgb(252, 185, 0);
+  --info-color: rgb(0, 255, 0);
 }
 
 [data-theme="dark"] {
+  --background: linear-gradient(#333 55%, rgba(30, 144, 255, 0.1));
   --background-color: #1e1e1e;
+  --subbackground-color: #333;
   --text-color: white;
+  --subtext-color: #c7dff8;
   --sub-color: #333;
+  --header-color: #121212;
+  --warning-color: yellow;
+  --info-color: rgb(0, 255, 0);
 }
 
 body {

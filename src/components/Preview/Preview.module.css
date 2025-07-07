@@ -1,0 +1,142 @@
+.container {
+    height: calc(100vh - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.mainContent {
+    max-width: 800px;
+    height: 800px;
+    max-height: 85%;
+    background: var(--background-color);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    position: relative;
+}
+
+.mainContent h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--subtext-color);
+}
+
+.mainContent h2 span {
+    color: dodgerblue;
+}
+
+.mainContent p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--subtext-color);
+    margin-bottom: 2rem;
+    text-align: justify;
+}
+
+.mainContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--subtext-color);
+}
+
+.featuresList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2.5rem;
+}
+
+.featureItem {
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    cursor: default;
+    overflow: hidden;
+    background-color: var(--subbackground-color);
+}
+
+.featureHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.featureIcon {
+    font-size: 1.3rem;
+}
+
+.featureContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.featureDescription {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--subtext-color);
+}
+
+.featureImageContainer {
+    height: 100px;
+    border-radius: 8px;
+}
+
+.featureImage {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.ctaButton {
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    position: absolute;
+    bottom: 2%;
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        padding: 2rem;
+    }
+    
+    .mainContent h2 {
+        font-size: 2rem;
+    }
+    
+    .featureContent {
+        flex-direction: column;
+    }
+    
+    .featureImageContainer {
+        min-height: 150px;
+    }
+}

@@ -1,17 +1,69 @@
 .unauth {
     display: flex;
+    position: relative;
     align-items: center;    
 }
 
-.unauth button {
-    height: 4vh;
-    width: 10vw;
-    margin: 0 1rem;
-    font-size: 1.2rem;
-    padding: 0;
+.unauth h3 {
+    margin: 0 1rem 0 0.2rem;
 }
 
-.unauth button:hover {
-    background-color: white;
-    color: blueviolet;
+.userLogo {
+    position: relative;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.userLogo img {
+    height: 2rem;
+    width: 2rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: white;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 10px;
+}
+
+.notificationItem {
+    position: relative;
+    padding: 5%;
+}
+
+.notificationItem.notRead {
+    background-color: var(--sub-color);
+}
+
+.notificationText p {
+    margin: 0;
+    color: var(--text-color);
+    text-indent: 0;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 0;
+    right: -11%;
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: bolder;
+    transition: all 0.2s ease;
+    padding: 0;
+    margin: 0;
+}
+
+.deleteButton:hover {
+    color: red;
+    background-color: transparent;
 }

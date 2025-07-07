@@ -1,16 +1,4 @@
 .auth {
     display: flex;
     align-items: center;    
-  }
-
-  .auth button {
-    height: 4vh;
-    width: 15vw;
-    margin: 0 1rem;
-    padding: 0;
-  }
-
-  .auth button:hover {
-    background-color: white;
-    color: dodgerblue;
-  }
+}
