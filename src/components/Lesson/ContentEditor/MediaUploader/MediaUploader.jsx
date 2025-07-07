@@ -7,6 +7,49 @@ const MediaUploader = ({ content, onUpdate, style, className, mediaType = 'image
     const [error, setError] = useState('');
     const inputRef = useRef(null);
 
+    const getEmbedVideoUrl = (url) => {
+        try {
+            const parsedUrl = new URL(url);
+            const hostname = parsedUrl.hostname.replace('www.', '');
+            
+            const videoServices = {
+                'youtube.com': {
+                    id: parsedUrl.searchParams.get('v') || parsedUrl.pathname.split('/').pop(),
+                    embed: 'https://www.youtube.com/embed/{id}'
+                },
+                'youtu.be': {
+                    id: parsedUrl.pathname.split('/').pop(),
+                    embed: 'https://www.youtube.com/embed/{id}'
+                },
+                'rutube.ru': {
+                    id: parsedUrl.pathname.split('/').filter(Boolean).pop(),
+                    embed: 'https://rutube.ru/play/embed/{id}'
+                },
+                'vimeo.com': {
+                    id: parsedUrl.pathname.split('/').pop(),
+                    embed: 'https://player.vimeo.com/video/{id}'
+                },
+                'dailymotion.com': {
+                    id: parsedUrl.pathname.split('/video/').pop().split('_')[0],
+                    embed: 'https://www.dailymotion.com/embed/video/{id}'
+                },
+                'dai.ly': {
+                    id: parsedUrl.pathname.split('/').pop(),
+                    embed: 'https://www.dailymotion.com/embed/video/{id}'
+                }
+            };
+
+            if (videoServices[hostname]) {
+                const { id, embed } = videoServices[hostname];
+                return embed.replace('{id}', id);
+            }
+
+            return null;
+        } catch {
+            return null;
+        }
+    };
+
     useEffect(() => {
         if (content) {
             if (content instanceof File) {
@@ -57,19 +100,46 @@ const MediaUploader = ({ content, onUpdate, style, className, mediaType = 'image
     const handleUrlSubmit = async () => {
         try {
             setError('');
-            if (!urlInput) {
+            if (!urlInput.trim()) {
+                setError('Введите URL');
                 return;
             }
 
-            new URL(urlInput);
-            
+            let parsedUrl;
+            try {
+                parsedUrl = new URL(urlInput);
+            } catch {
+                if (mediaType === 'video') {
+                    const testVideo = document.createElement('video');
+                    testVideo.src = urlInput;
+                    
+                    await new Promise((resolve, reject) => {
+                        testVideo.onloadeddata = resolve;
+                        testVideo.onerror = () => reject(new Error('Ошибка загрузки видео'));
+                    });
+                    
+                    setPreview(urlInput);
+                    onUpdate?.(urlInput);
+                    return;
+                }
+                throw new Error('Некорректный URL адрес');
+            }
+
+            if (mediaType === 'video') {
+                const embedUrl = getEmbedVideoUrl(urlInput);
+                if (embedUrl) {
+                    setPreview(embedUrl);
+                    onUpdate?.(embedUrl);
+                    return;
+                }
+            }
             if (mediaType === 'image') {
                 const testImage = new Image();
                 testImage.src = urlInput;
                 
                 await new Promise((resolve, reject) => {
                     testImage.onload = resolve;
-                    testImage.onerror = reject;
+                    testImage.onerror = () => reject(new Error('Ошибка загрузки изображения'));
                 });
             } else if (mediaType === 'audio') {
                 const testAudio = new Audio();
@@ -77,7 +147,7 @@ const MediaUploader = ({ content, onUpdate, style, className, mediaType = 'image
                 
                 await new Promise((resolve, reject) => {
                     testAudio.onloadeddata = resolve;
-                    testAudio.onerror = reject;
+                    testAudio.onerror = () => reject(new Error('Ошибка загрузки аудио'));
                 });
             } else if (mediaType === 'video') {
                 const testVideo = document.createElement('video');
@@ -85,14 +155,14 @@ const MediaUploader = ({ content, onUpdate, style, className, mediaType = 'image
                 
                 await new Promise((resolve, reject) => {
                     testVideo.onloadeddata = resolve;
-                    testVideo.onerror = reject;
+                    testVideo.onerror = () => reject(new Error('Ошибка загрузки видео'));
                 });
             }
 
             setPreview(urlInput);
             onUpdate?.(urlInput);
         } catch (err) {
-            setError('Некорректный URL адрес или медиафайл не загружается');
+            setError(err.message || 'Некорректный URL адрес или медиафайл не загружается');
             setPreview(null);
         }
     };
@@ -108,6 +178,21 @@ const MediaUploader = ({ content, onUpdate, style, className, mediaType = 'image
 
     const renderPreview = () => {
         if (!preview) return <div>Нажмите для загрузки {getMediaTypeName(mediaType)} с ПК</div>;
+
+        if (mediaType === 'video') {
+            const embedUrl = getEmbedVideoUrl(preview);
+            if (embedUrl) {
+                return (
+                    <iframe
+                        src={embedUrl}
+                        className={styles.previewMedia}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    />
+                );
+            }
+        }
 
         switch(mediaType) {
             case 'image':

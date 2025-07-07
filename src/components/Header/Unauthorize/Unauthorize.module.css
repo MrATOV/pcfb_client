@@ -17,7 +17,9 @@
 
 .userLogo img {
     height: 2rem;
-    width:auto;
+    width: 2rem;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .notification {

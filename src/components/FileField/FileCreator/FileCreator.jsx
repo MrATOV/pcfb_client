@@ -105,7 +105,13 @@ const FileUploader = ({ open, onNoClick, onYesClick }) => {
     };
 
     return (
-        <Dialog style={{ width: "25vw" }} open={open} onNoClick={onNoClick} onYesClick={handleGenerate}>
+        <Dialog 
+            title="Загрузите файл"
+            style={{ width: "25vw" }} 
+            open={open} 
+            onNoClick={onNoClick} 
+            onYesClick={handleGenerate}
+        >
             <div className={styles.buttons}>
                 {Object.keys(dataTypes).map(type => (
                     <button
@@ -138,6 +144,7 @@ const FileUploader = ({ open, onNoClick, onYesClick }) => {
 
             {["array", "matrix"].includes(dataType) && (
                 <>
+                    <p>Или выберите параметры генерации</p>
                     <input className={styles.filenameInput} type="text" value={filename} onChange={(e) => setFilename(e.target.value)}/>
                     <DataGenerator type={dataType} onParamsChange={setParams}/>
                 </>
@@ -145,6 +152,7 @@ const FileUploader = ({ open, onNoClick, onYesClick }) => {
             
             {dataType === 'text' && (
                 <>
+                    <p>Или введите содержимое</p>
                     <input className={styles.filenameInput} type="text" value={filename} onChange={(e) => setFilename(e.target.value)}/>
                     <textarea 
                         className={styles.textInput}

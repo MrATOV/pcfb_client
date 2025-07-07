@@ -1,0 +1,112 @@
+.item {
+    position: relative;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    border: transparent;
+    cursor: pointer;
+}
+
+
+
+.item.active {
+    background: rgba(30, 144, 255, 0.5);
+    border: 1px solid dodgerblue;
+}
+
+.avatar {
+    width: 90%;
+    height: auto;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: bolder;
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+
+.email {
+    font-size: 1em;
+}
+
+.deleteButton {
+    background: transparent;
+    font-weight: bolder;
+    color: var(--text-color);
+}
+
+.deleteButton:hover {
+    background: transparent;
+    color: red;
+}
+
+.gridMode {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 240px;
+    height: 300px;
+    margin: 12px;
+}
+
+.gridMode:hover {
+    border: 1px solid var(--text-color);
+}
+
+.gridMode .avatar {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+}
+
+.gridMode .username,
+.gridMode .email {
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gridMode .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.tableMode {
+    display: flex;
+    align-items: center;
+    width: 800px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    margin: 0;
+    background: var(--background);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tableMode:hover {
+    background-color: dodgerblue;
+}
+
+.tableMode .avatar {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.tableMode .username {
+    flex: 1;
+    margin: 0 20px 0 0;
+    text-align: left;
+}
+
+.tableMode .email {
+    flex: 1;
+    text-align: left;
+}

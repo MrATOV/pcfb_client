@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react';
-import axios from "/src/config/axiosLessonsConfig";
+import axios from "/src/config/axiosUsersConfig";
 
-export const useDataActions = (type) => {
+export const useDataActions = () => {
     const [dataList, setDataList] = useState([]);
     const [dataContent, setDataContent] = useState(null);
+    const [dataCount, setDataCount] = useState(0);
 
-    const fetchLoadData = useCallback(async () => {
+    const fetchLoadData = useCallback(async (type = 'all', filter = '', total_count = null, page = 1, page_size = 10) => {
         try {
             const accessToken = localStorage.getItem("access_token");
             let url;
@@ -15,11 +16,18 @@ export const useDataActions = (type) => {
                 url = `/data/list/${type}`
             }
             const response = await axios.get(url, {
+                params: {
+                    filter: filter,
+                    total_count: total_count,
+                    page: page,
+                    page_size: page_size
+                },
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
                 },
             });
-            setDataList(response.data);
+            setDataList(response.data.data);
+            setDataCount(response.data.total_count);
         } catch {
             console.error("Get default data error:", error);
         }
@@ -69,13 +77,14 @@ export const useDataActions = (type) => {
                     "Authorization": `Bearer ${accessToken}`,
                 },
             });
-            await fetchLoadData(type);
+            
+            setDataList(dataList.filter(item => item.id !== index));
         } catch (error) {
             console.error("Delete data error:", error);
         }
-    }, [fetchLoadData]);
+    }, [dataList]);
 
-    const fetchUploadFile = useCallback(async (data) => {
+    const fetchUploadFile = useCallback(async (data, type = 'all', filter = '', page = 1, page_size = 10) => {
         const formData = new FormData();
         formData.append('file', data.file);
         try {
@@ -86,13 +95,13 @@ export const useDataActions = (type) => {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
-            await fetchLoadData();
+            await fetchLoadData(type, filter, null, page, page_size);
         } catch (error) {
             console.error("Add default data error", error);
         }
     }, [fetchLoadData]);
     
-    const fetchGenerateData = useCallback(async (generateData) => {
+    const fetchGenerateData = useCallback(async (generateData, type = 'all', filter = '', page = 1, page_size = 10) => {
         const data = {
             filename: generateData.filename,
             dataType: generateData.params.dataType
@@ -122,13 +131,13 @@ export const useDataActions = (type) => {
                     'Authorization': `Bearer ${accessToken}`
                 },
             });
-            await fetchLoadData();
+            await fetchLoadData(type, filter, null, page, page_size);
         } catch (error) {
             console.error("Generate default data error", error);
         }
     }, [fetchLoadData]);
 
-    const fetchUploadText = useCallback(async (generateData) => {
+    const fetchUploadText = useCallback(async (generateData, type = 'all', filter = '', page = 1, page_size = 10) => {
         
         const data = {
             filename: generateData.filename,
@@ -141,7 +150,7 @@ export const useDataActions = (type) => {
                     'Authorization': `Bearer ${accessToken}`
                 },
             });
-            await fetchLoadData();
+            await fetchLoadData(type, filter, null, page, page_size);
         } catch (error) {
             console.error("Generate default data error", error);
         }
@@ -150,6 +159,7 @@ export const useDataActions = (type) => {
     return {
         dataList,
         dataContent,
+        dataCount,
         fetchLoadData,
         fetchGetDataContent,
         fetchDeleteData,

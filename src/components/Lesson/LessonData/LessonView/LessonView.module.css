@@ -1,0 +1,53 @@
+.edit {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 1% 5% 5% 5%;
+    box-sizing: border-box;
+}
+
+.item {
+    width: 100%;
+    border: 1px solid var(--sub-color);
+    margin-bottom: 1%;
+    box-sizing:border-box;
+    height: auto;
+    padding: 1%;
+}
+
+.previewItem {
+    width: 100%;
+    margin-bottom: 1%;
+    height: auto;
+    padding: 1%;
+}
+
+.itemUtils {
+    border-bottom: 1px solid var(--sub-color);
+    display: flex;
+    margin: -1% -1% 1% -1%;
+}
+
+.itemUtils button {
+    background-color: transparent;
+}
+
+.itemUtils button:hover {
+    background-color: var(--sub-color);
+}
+
+.itemUtils button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+.itemUtils button img {
+    margin: 0;
+}

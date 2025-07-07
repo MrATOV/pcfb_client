@@ -18,6 +18,11 @@
     transition: all 0.3s ease;
 }
 
+.delimiter {
+    width: 2px;
+    background-color: var(--sub-color);
+}
+
 .buttonManual {
     font-size: 2rem;
     width: 44px;
@@ -35,4 +40,11 @@
 .bar button:disabled {
     background-color: #d3d3d3;
     cursor: not-allowed;
+}
+
+.filename {
+    align-self: center;
+    margin: 0 0 0 10px;
+    font-size: 1.5rem;
+    flex: 1;
 }

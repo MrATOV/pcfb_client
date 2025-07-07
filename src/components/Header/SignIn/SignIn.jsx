@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { Context } from '/src/Context';
 import styles from './SignIn.module.css'
-import axios from '/src/config/axiosLessonsConfig';
+import axios from '/src/config/axiosUsersConfig';
 import logo from '/src/assets/logo.svg'
 import Modal from '/src/components/Modal/Modal'
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SignIn(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [unauthorized, setUnauthorized] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const { fetchProtectedData } = useContext(Context);
     const navigate = useNavigate();
 
@@ -29,8 +29,13 @@ export default function SignIn(){
             await fetchProtectedData();
             navigate('/')
         } catch (error) {
-            setUnauthorized(true)
-            console.log(error);
+            if (error.status === 403) {
+                setErrorMessage("Аккаунт еще не подтвержден")
+                console.log(error);
+            } else {
+                setErrorMessage("Неправильный логин или пароль")
+                console.error(error);
+            }
         }
     }
 
@@ -41,7 +46,7 @@ export default function SignIn(){
                     <img className={styles.logo} src={logo} alt='logo'/>
                     <span>Авторизация</span>
                 </div>
-                {unauthorized && <p className={styles.unauthorized}>Неправильный логин или пароль</p>}
+                {errorMessage && <p className={styles.unauthorized}>{errorMessage}</p>}
                 <input type="email" placeholder='Электронная почта' value={username} onChange={(event) => setUsername(event.target.value)}/>
                 <input type="password" placeholder='Пароль' value={password} onChange={(event) => setPassword(event.target.value)}/>
                 <button type="submit">Вход</button>

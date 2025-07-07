@@ -1,0 +1,24 @@
+.container {
+    width: 20%;
+    border-right: 1px solid var(--sub-color);
+}
+
+.container h2 {
+    text-align: center;
+}
+
+.item {
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.item.currentPage {
+    font-weight: 'bold';
+}
+
+.item:hover {
+    background-color: var(--sub-color);
+}

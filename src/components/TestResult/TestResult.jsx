@@ -4,17 +4,19 @@ import PerformanceHeader from './PerformanceHeader/PerformaceHeader';
 import PerformanceTable from './PerformanceTable/PerformanceTable';
 import PerformanceChart from './PerformanceChart/PerformanceChart';
 import styles from './TestResult.module.css';
-import axios from '../../config/axiosLessonsConfig';
+import axios from '../../config/axiosUsersConfig';
 import FileView from '../FileField/FileView/FileView';
 import {useDataActions} from '../FileField/useDataActions';
+import {toast} from '../../toast';
 
-const TestResult = ({open, onCloseClick, data, title}) => {
+const TestResult = ({open, onCloseClick, data, title, onRemoveDataItem}) => {
     const [showChart, setShowChart] = useState(false);
     const [selectedMetric, setSelectedMetric] = useState('time');
     const [testName, setTestName] = useState('Название тестирования');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [processingDataOpen, setProcessingDataOpen] = useState(false);
-    const [dataType, setDataType] = useState('null');
+    const [procData, setProcData] = useState('null');
+    const [currentTitle, setCurrentTitle] = useState(title);
     const {dataContent, fetchGetDataContent} = useDataActions();
     
 
@@ -22,22 +24,30 @@ const TestResult = ({open, onCloseClick, data, title}) => {
         data[currentIndex].title = testName;
         try {
             const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post('/test', data[currentIndex], {
+            await axios.post('/test', data[currentIndex], {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${accessToken}`
                 },
             });
-            alert("Результаты теста успешно сохранены"); 
+            if (data.length === 1) {
+                onCloseClick();
+                onRemoveDataItem(currentIndex);
+            } else {
+                onRemoveDataItem(currentIndex);
+            }
+
+            toast.info("Результаты теста успешно сохранены"); 
         } catch (error) {
+            toast.error("Не удалось сохранить результаты теста");
             console.error("Error save data:", error);
         }
     }
 
     const handleGenerateClick = async () => {
         try {
-            const request = {"test_list": data[currentIndex].data};
-            const response = await axios.post('/report', request, {
+            console.log(data[currentIndex]); 
+            const response = await axios.post('/report', data[currentIndex], {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -52,26 +62,29 @@ const TestResult = ({open, onCloseClick, data, title}) => {
                 link.click();
                 URL.revokeObjectURL(fileUrl);
             } else {
-                alert("Произошла ошибка при генерации отчета");
+                toast.error("Произошла ошибка при генерации отчета");
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
     useEffect(() => {
         if (data && data.length > 0) {
             setCurrentIndex(0);
-            setDataType(data[0].data[0].type);
+            setProcData(data[0].results[0]);
         }
     }, [data]);
 
+    useEffect(() => {
+        setCurrentTitle(title);
+    }, [title]);
+
     const handleProcessingDataOpen = async (filename) => {
-        console.log(data[currentIndex].dir);
-        await fetchGetDataContent(dataType, filename, data[currentIndex].dir);
+        await fetchGetDataContent(procData?.type, filename, data[currentIndex].dir);
         setProcessingDataOpen(true);
     }
-    
+    console.log(data);
     return (
         <Modal open={open} onCloseClick={onCloseClick} style={{ width: '85vw', maxWidth: '1200px' }}>
             {data && data.length > 0 && (
@@ -81,14 +94,14 @@ const TestResult = ({open, onCloseClick, data, title}) => {
                             <button 
                                 key={index} 
                                 className={index == currentIndex ? styles.active : ""} 
-                                onClick={() => {setCurrentIndex(index); setDataType(data[index].data[0].type);}}
+                                onClick={() => {setCurrentIndex(index); setDataType(data[index].data[0].type); setCurrentTitle(null);}}
                             >
                                 Результат {index}
                             </button>
                         ))}
                     </div>} 
                     <PerformanceHeader
-                        title={title}
+                        title={data[currentIndex].title}
                         testName={testName}
                         setTestName={setTestName}
                         onSaveClick={handleSaveClick}
@@ -96,14 +109,15 @@ const TestResult = ({open, onCloseClick, data, title}) => {
                         showChart={showChart}
                         setShowChart={setShowChart}
                     />
-                    
+                    <h2>{data[currentIndex].global_analysis}</h2>
                     <div className={styles.content}>
-                        {data[currentIndex].data.map((item, itemIndex) => (
+                        {data[currentIndex].results.map((item, itemIndex) => (
                             <div key={itemIndex} className={styles.test_item}>
                                 <h2 className={styles.item_title}>{item.title}</h2>
                                 {item.data.map((argItem, argIndex) => (
                                     <div key={argIndex}>
                                         <p className={styles.item_args}>{argItem.args}</p>
+                                        <p className={styles.item_args}>{argItem.analysis}</p>
                                         {argItem.processing_data && <p>Обработанные данные</p>}
                                         {showChart ? (
                                             <PerformanceChart 
@@ -122,8 +136,9 @@ const TestResult = ({open, onCloseClick, data, title}) => {
                     <FileView 
                         open={processingDataOpen} 
                         onCloseClick={() => setProcessingDataOpen(false)} 
-                        type={dataType}
+                        data={procData}
                         content={dataContent}
+                        path={data[currentIndex].dir}
                     />
                 </div>
             )}

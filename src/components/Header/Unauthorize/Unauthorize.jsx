@@ -3,11 +3,11 @@ import Dialog from '/src/components/Dialog/Dialog';
 import { useContext, useState, useEffect, useRef } from "react";
 import { Context } from "/src/Context";
 import userLogo from "/src/assets/user.svg";
-import axios from '/src/config/axiosLessonsConfig';
+import axios from '/src/config/axiosUsersConfig';
 import DropdownMenu from '../../DropdownMenu/DropdownMenu';
 import MarkdownView from '../../Lesson/ContentBlock/MarkdownView/MarkdownView';
 
-const Unauthorize = ({children}) => {
+const Unauthorize = ({username, avatar}) => {
     const { fetchProtectedData } = useContext(Context);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -78,16 +78,18 @@ const Unauthorize = ({children}) => {
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
-    
+
     return (
         <div className={styles.unauth}>
             <div className={styles.userLogo} ref={triggerRef} onClick={toggleDropdown}>
-                <img src={userLogo} alt="user"/>
+                <img src={avatar ? avatar : userLogo} alt="user"/>
                 {notReadCount > 0 && <div className={styles.notification}>{notReadCount}</div>}
             </div>
-            <h3>{children}</h3>
+            <h3>{username}</h3>
             <button onClick={() => setDialogOpen(true)}>Выход</button>
-            <Dialog open={dialogOpen} onYesClick={handleYesClick} onNoClick={() => {setDialogOpen(false)}}>Вы уверены, что хотите выйти?</Dialog>
+            <Dialog open={dialogOpen} onYesClick={handleYesClick} onNoClick={() => {setDialogOpen(false)}}>
+                <p>Вы уверены, что хотите выйти?</p>
+            </Dialog>
             <DropdownMenu
                 style={{top: "100%", right: "100%"}}
                 isOpen={isDropdownOpen}

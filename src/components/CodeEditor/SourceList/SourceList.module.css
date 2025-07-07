@@ -1,0 +1,85 @@
+.container {
+    width: 15%;
+    border-right: 1px solid var(--sub-color);
+    padding: 10px 4px;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.container.collapsed {
+    transform: translateX(calc(100% - 30px));
+    width: 30px;
+    padding: 10px 4px;
+}
+
+.header {
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.header h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.filter {
+    padding: 8px;
+    width: 100%;
+    height: 35px;
+    box-sizing: border-box;
+    border-radius: 0;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-left: 0;
+}
+
+.filter:focus {
+    outline: none;
+    border: 1px solid dodgerblue;
+}
+
+.content {
+    flex: 1;
+    height: 100%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 6px;
+    box-sizing: border-box;
+}
+
+.row.active {
+    background-color: var(--sub-color);
+}
+
+.row img {
+    width: auto;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.row button {
+    background: transparent;
+    color: var(--text-color);
+    margin-left: auto;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.row button:hover {
+    background: transparent;
+    color: red;
+}
+
+.row:hover {
+    background-color: var(--sub-color);
+}

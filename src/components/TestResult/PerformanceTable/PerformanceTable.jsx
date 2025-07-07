@@ -14,6 +14,8 @@ const PerformanceTable = ({ performance, onProcDataClick }) => {
                         <th>Ускорение</th>
                         <th>Стоимость</th>
                         <th>Эффективность</th>
+                        <th>Т. ускорение Амдала</th>
+                        <th>Т. ускорение Густавсона-Барсиса</th>
                         {performance[0].processing_data && <th>Данные</th>}
                     </tr>
                 </thead>
@@ -25,6 +27,8 @@ const PerformanceTable = ({ performance, onProcDataClick }) => {
                             <td>{perf.acceleration.toFixed(3)}</td>
                             <td>{perf.cost.toFixed(6)}</td>
                             <td>{perf.efficiency.toFixed(3)}</td>
+                            <td>{perf.amdahl_acceleration ? perf.amdahl_acceleration.toFixed(3) : "-"}</td>
+                            <td>{perf.gustavson_acceleration ? perf.gustavson_acceleration.toFixed(3) : "-"}</td>
                             {perf.processing_data && 
                             <td onClick={() => onProcDataClick(perf.processing_data)} style={{padding: "0 1rem"}}>
                                     <img style={{height: "2rem"}} src={dataLogo} alt="Данные"/>

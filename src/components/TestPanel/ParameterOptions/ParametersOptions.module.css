@@ -1,6 +1,6 @@
 .parametersOptions {
-  width: 18vw;
-  height: 88vh;
+  width: 20%;
+  height: 100%;
   padding: 20px;
   background-color: var(--background-color);
   border-right: 1px solid var(--sub-color); 

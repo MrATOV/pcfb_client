@@ -1,5 +1,5 @@
 .options {
-  width: 18vw;
+  width: 20%;
   background-color: var(--background-color);
   padding: 20px;
   border-right: 1px solid var(--sub-color);
@@ -68,7 +68,7 @@
 .threads { 
   display: inline-flex;
   align-items: center; 
-  margin-right: 16px; 
+  margin-right: 2%; 
   margin-bottom: 8px;
   width: 20%;
 }

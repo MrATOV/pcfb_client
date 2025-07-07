@@ -1,19 +1,27 @@
 import { useState, useCallback } from "react";
 import axios from "/src/config/axiosLessonsConfig";
+import axiosUsers from "/src/config/axiosUsersConfig";
 
 
 export const useLessonActions = () => {
     const [authLessonList, setAuthLessonList] = useState([]);
     const [publicLessonList, setPublicLessonList] = useState([]);
     const [subscriptLessonList, setSubscriptLessonList] = useState([]);
+    const [authCount, setAuthCount] = useState(0);
+    const [publicCount, setPublicCount] = useState(0);
+    const [subscriptCount, setSubscriptCount] = useState(0);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [private_access, setPrivateAccess] = useState(false);
     const [description, setDescription] = useState("");
-    const [lessonData, setLessonData] = useState([]);
+    const [lessonTeacherId, setLessonTeacherId] = useState(0);
+    const [lessonData, setLessonData] = useState(null);
+    const [lessonBoundary, setLessonBoundary] = useState({prev: null, next: null});
+    const [lessonDataCount, setLessonDataCount] = useState(0);
+    const [headers, setHeaders] = useState([]);
     const fileTypes = ["image", "audio", "video"];
     
-    const fetchAddLesson = useCallback(async () => {
+    const fetchAddLesson = useCallback(async (title, private_access, description) => {
         try {
             const data = { 
                 title, 
@@ -23,7 +31,6 @@ export const useLessonActions = () => {
             const accessToken = localStorage.getItem("access_token");
             await axios.post('/lesson', data, {
                 headers: { 
-                    'Content-Type': 'application/json',
                     "Authorization": `Bearer ${accessToken}`
                 },
             });
@@ -32,18 +39,25 @@ export const useLessonActions = () => {
         } catch (error) {
             console.error("Add lesson error:", error);
         }
-    }, [title]);
+    }, []);
 
-    const fetchGetLessonListSubscript = useCallback(async () => {
+    const fetchGetLessonListSubscript = useCallback(async (title, total_count = null, page = 1, page_size = 10) => {
         try {
             const accessToken = localStorage.getItem("access_token");
-            const response = await axios.get('/users/lessons', {
+            const response = await axios.get('/lessons/users', {
+                params: {
+                    title,
+                    total_count,
+                    page,
+                    page_size
+                },
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
             
-            setSubscriptLessonList(response.data);
+            setSubscriptLessonList(response.data.data);
+            setSubscriptCount(response.data.total_count);
         } catch (error) {
             console.error("Get lesson list error:", error);
         }
@@ -57,7 +71,7 @@ export const useLessonActions = () => {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
-            console.log(response);
+            
             return `${window.location.origin}/subscribe/${response.data.token}`;
         } catch (error) {
             console.error("Get lesson token error:", error);
@@ -67,7 +81,7 @@ export const useLessonActions = () => {
     const fetchBroadcastNotifications = useCallback(async (token, lesson_id, user_indices) => {
         try {
             const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post('notification/broadcast', {
+            const response = await axiosUsers.post('notification/broadcast', {
                 token,
                 user_indices,
                 lesson_id
@@ -76,9 +90,7 @@ export const useLessonActions = () => {
                     'Authorization': `Bearer ${accessToken}`
                 },
             });
-            if (response.status === 200) {
-                alert("Приглашения отправлены");
-            }
+            return response.status === 200;
         } catch (error) {
             console.error("Error brotcast notifications: ", error);
         }
@@ -126,24 +138,41 @@ export const useLessonActions = () => {
         }
     }, [fetchGetLessonListSubscript]);
 
-    const fetchGetLessonListOwn = useCallback(async () => {
+    const fetchGetLessonListOwn = useCallback(async (title, total_count = null, page = 1, page_size = 10) => {
         try {
             const accessToken = localStorage.getItem("access_token");
             const response = await axios.get('/lesson/list/own', {
+                params: {
+                    title,
+                    total_count,
+                    page,
+                    page_size
+                },
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
-            setAuthLessonList(response.data);
+            setAuthLessonList(response.data.data);
+            setAuthCount(response.data.total_count);
         } catch (error) {
             console.error("Get lesson list error:", error);
         }
     }, []);
     
-    const fetchGetLessonListPublic = useCallback(async () => {
+    const fetchGetLessonListPublic = useCallback(async (title = "", total_count = null, page = 1, page_size = 10) => {
         try {
-            const response = await axios.get('/lesson/list/public');
+            
+            const response = await axios.get('/lesson/list/public', {
+                params: {
+                    title,
+                    total_count,
+                    page,
+                    page_size
+                }
+            });
             setPublicLessonList(response.data);
+            setPublicLessonList(response.data.data);
+            setPublicCount(response.data.total_count);
         } catch (error) {
             console.error("Get lesson list error:", error);
         }
@@ -163,16 +192,35 @@ export const useLessonActions = () => {
         }
     }, [fetchGetLessonListOwn]);
 
-    const fetchGetLessonData = useCallback(async (index) => {
+    const fetchGetLessonData = useCallback(async (index, total_count = null, page = 1, page_size = 10, is_editing = false) => {
+
         try {
-            const response = await axios.get(`/lesson/${index}/data`);
-            const data = await Promise.all(response.data.map(async item => {
+            const response = await axios.get(`/lesson/${index}/data`, {
+                params: {
+                    total_count,
+                    page,
+                    page_size,
+                    is_editing,
+                }
+            });
+            const data = await Promise.all(response.data.data.map(async item => {
                 if (fileTypes.includes(item.type) && !item.content.startsWith("http")) {
                     item.content = `${axios.defaults.baseURL}/${item.content}`;
                 }
                 return item;
             }));
+            const boundary = response.data.boundary;
+            if (boundary.prev && fileTypes.includes(boundary?.prev.type) && !boundary?.prev.content.startsWith("http")) {
+                boundary.prev.content = `${axios.defaults.baseURL}/${boundary.prev.content}`;
+            }
+            if (boundary.next && fileTypes.includes(boundary.next.type) && !boundary.next.content.startsWith("http")) {
+                boundary.next.content = `${axios.defaults.baseURL}/${boundary.next.content}`;
+            }
             setLessonData(data);
+            setLessonTeacherId(response.data.teacher_id);
+            setLessonBoundary(boundary);
+            setLessonDataCount(response.data.total_count);
+            setHeaders(response.data.headers);
         } catch (error) {
             console.error("Get lesson data error:", error);
         }
@@ -186,11 +234,10 @@ export const useLessonActions = () => {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
-            await fetchGetLessonData(lesson_id);
         } catch (error) {
             console.error("Delete lesson data error:", error);
         }
-    }, [fetchGetLessonData]);
+    }, []);
 
     const fetchAddLessonDataItem = useCallback(async (item, lesson_id) => {
         const formData = new FormData();
@@ -209,11 +256,10 @@ export const useLessonActions = () => {
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
-            await fetchGetLessonData(lesson_id);
         } catch (error) {
             console.error("Add lesson data error", error);
         }
-    }, [fetchGetLessonData]);
+    }, []);
 
     const fetchUpdatelessonDataItem = useCallback(async (item) => {
         const formData = new FormData();
@@ -234,38 +280,26 @@ export const useLessonActions = () => {
             if (response.data.filename) {
                 item.content = `${axios.defaults.baseURL}/${response.data.filename}`;
             }
-            await fetchGetLessonData(item.lesson_id);
         } catch (error) {
             console.error("Put lesson data error", error);
         }
-    }, [fetchGetLessonData]);
-
-    const onUpdateLessonDataItem = useCallback((order, newContent) => {
-        lessonData.forEach(async item => {
-            if (item.order === order) {
-                const newItem = { ...item, content: newContent };
-                await fetchUpdatelessonDataItem(newItem);
-            }
-        });
-    }, [lessonData, fetchUpdatelessonDataItem]);
-
-    const onChangeLessonDataItems = useCallback(async (firstOrder, secondOrder) => {
-        const firstItem = lessonData.find(item => item.order === firstOrder);
-        const secondItem = lessonData.find(item => item.order === secondOrder);
-        const updatedFirstItem = { ...firstItem, order: secondOrder };
-        const updatedSecondItem = { ...secondItem, order: firstOrder };
-        await fetchUpdatelessonDataItem(updatedFirstItem);
-        await fetchUpdatelessonDataItem(updatedSecondItem);
-    }, [lessonData, fetchUpdatelessonDataItem]);
+    }, []);
 
     return {
         authLessonList,
         publicLessonList,
         subscriptLessonList,
+        authCount,
+        publicCount,
+        subscriptCount,
         dialogOpen,
         title,
         private_access,
         lessonData,
+        lessonTeacherId,
+        lessonBoundary,
+        lessonDataCount,
+        headers,
         description,
         setDialogOpen,
         setPrivateAccess,
@@ -284,8 +318,6 @@ export const useLessonActions = () => {
         fetchDeleteLessonData,
         fetchAddLessonDataItem,
         fetchUpdatelessonDataItem,
-        onUpdateLessonDataItem,
-        onChangeLessonDataItems,
         fetchBroadcastNotifications,
     };
 };

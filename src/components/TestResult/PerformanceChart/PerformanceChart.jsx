@@ -7,7 +7,9 @@ const METRIC_LABELS = {
     time: 'Время (сек)',
     acceleration: 'Ускорение',
     efficiency: 'Эффективность',
-    cost: 'Стоимость'
+    cost: 'Стоимость',
+    amdahl_acceleration: 'Т. ускорение Амдала',
+    gustavson_acceleration: 'Т. ускорение Густавсона-Барсиса'
 };
 
 const PerformanceChart = ({ data, selectedMetric, onMetricChange }) => {
@@ -38,7 +40,7 @@ console.log(data);
     return (
         <div className={styles.chart_wrapper}>
             <div className={styles.metric_selector}>
-                {['time', 'acceleration', 'efficiency', 'cost'].map(metric => (
+                {['time', 'acceleration', 'efficiency', 'cost', 'amdahl_acceleration', 'gustavson_acceleration'].map(metric => (
                     <button
                         key={metric}
                         onClick={() => onMetricChange(metric)}

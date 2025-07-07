@@ -55,10 +55,37 @@
 .header_logo h3 {
     color: dodgerblue;
     font-size: 1.3rem;
-    width: 60%;
+    width: 300px;
 }
 
 .right {
     display: flex;
     align-items: center;
+}
+
+.navigation {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+}
+
+.navigation button {
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    background-color: var(--header-color);
+    color: var(--text-color);
+}
+
+.navigation button:active {
+    background-color: dodgerblue;
+    color: white;
+    transform: scale(1);
+}
+
+.navigation button.active {
+    background-color: dodgerblue;
+    color: white;
+    cursor: default;
 }

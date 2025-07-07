@@ -18,8 +18,8 @@ const GeneralOptions = ({ threadNumber, declaration, onOptionsChange }) => {
 
     useEffect(() => {
         setSettings({
-            iterations: 1,
-            threads: [],
+            iterations: 2,
+            threads: [1, 2],
             koefficient: 0,
             calculate: 0,
             alpha: 0,
@@ -55,7 +55,7 @@ const GeneralOptions = ({ threadNumber, declaration, onOptionsChange }) => {
 
     return (
         <div className={styles.options}>
-            <h2>Общие настройки</h2>
+            <h3>Общие настройки</h3>
             <label>Количество потоков</label>
             <div>
                 {Array.from({ length: threadNumber }, (_, id) => (

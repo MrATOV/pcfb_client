@@ -12,6 +12,7 @@
     flex-direction: row;
     flex: 1;
     max-height: 80%;
+    background-color: var(--background-color);
 }
 
 .fullscreen {
@@ -20,6 +21,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1000;
+    z-index: 1001;
     background: white;
 }

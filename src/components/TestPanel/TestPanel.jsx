@@ -5,6 +5,7 @@ import ParametersOptions from './ParameterOptions/ParametersOptions';
 import FileField from '../FileField/FileField';
 import axios from '/src/config/axiosCompilerConfig.js';
 import Dialog from '../Dialog/Dialog';
+import styles from './TestPanel.module.css';
 
 const TestPanel = ({threadNumber = 1, code, open, onNoClick, onYesClick}) => {
     const [name, setName] = useState(null);
@@ -59,6 +60,8 @@ const TestPanel = ({threadNumber = 1, code, open, onNoClick, onYesClick}) => {
     }, [code]);
 
     const handleOpenFunctionOptionsClick = (declaration) => {
+        declaration.name = declaration.name.split("(")[0];
+        declaration.type = declaration.type.split("(")[0];
         setDeclaration(declaration);
         setOptions(null);
         setParameterSets([]);
@@ -96,13 +99,19 @@ const TestPanel = ({threadNumber = 1, code, open, onNoClick, onYesClick}) => {
     
     return (
         <Dialog title="Генератор тестов" style={{width: "90vw"}} open={open} onNoClick={handleNoClick} onYesClick={handleGenerateClick}>
-            {(functionsDeclarations && name === null) && functionsDeclarations.map((declaration, id) => (
-                <button key={id} onClick={() => handleOpenFunctionOptionsClick(declaration)}>
-                    {declaration.name}
-                </button>
-            ))}
+            {(functionsDeclarations && name === null) && <div className={styles.selection}>
+                <p>Выберите функцию: </p>
+                {functionsDeclarations.map((declaration, id) => (
+                    <>
+                        <button key={id} onClick={() => handleOpenFunctionOptionsClick(declaration)}>
+                            {declaration.name}
+                        </button>
+                        {id < functionsDeclarations.length - 1 && <span key={id + functionsDeclarations.length} className={styles.separator}>|</span>}
+                    </>
+                ))}
+            </div>}
         {name && (
-            <div style={{display: "flex", height: "80vh"}}>
+            <div style={{display: "flex", height: "90%"}}>
                 <GeneralOptions
                     threadNumber={threadNumber}
                     declaration={declaration}
@@ -112,7 +121,7 @@ const TestPanel = ({threadNumber = 1, code, open, onNoClick, onYesClick}) => {
                     declaration={declaration}
                     onParameterSetChange={setParameterSets}
                 />
-                <FileField selectItems={selectItems} onSelectItems={setSelectItems} type={declaration.type.split("(")[0]}/>
+                <FileField style={{height: "90%", width: "60%"}} selectItems={selectItems} onSelectItems={setSelectItems} type={declaration.type}/>
             </div>
         )}
         </Dialog>

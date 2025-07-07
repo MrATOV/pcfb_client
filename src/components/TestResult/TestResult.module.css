@@ -11,21 +11,23 @@
 }
 
 .resultButtons button {
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
-    background: none;
+    background-color: dodgerblue;
+    color: white;
+    margin: 0 1px;
+    padding: 1px 20px;
+    border-radius: 5px;
 }
 
 .resultButtons button.active {
-    background-color: dodgerblue;
+    background: none;
+    color: var(--text-color);
 }
 
 .content {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-height: 70vh;
+    max-height: 66vh;
     overflow-y: auto;
     padding-right: 0.5rem;
 }

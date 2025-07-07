@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ArrayView.module.css';
-import axios from "/src/config/axiosLessonsConfig";
+import axios from "/src/config/axiosUsersConfig";
 
 const ArrayView = ({ filename, path = "default" }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -69,28 +69,29 @@ const ArrayView = ({ filename, path = "default" }) => {
                     onChange={handleLimitChange}
                 />
             </div>
-
-            <div className={styles.arrayContainer}>
-                {data ? (
-                    data.map((item, index) => (
-                        <div key={index} className={styles.arrayItem}>
-                            {item}
-                        </div>
-                    ))
-                ) : (
-                    <div>Загрузка...</div>
-                )}
+            <div className={styles.arrayContainerWrapper}>
+                <div className={styles.arrayContainer}>
+                    {data ? (
+                        data.map((item, index) => (
+                            <div key={index} className={styles.arrayItem}>
+                                {item}
+                            </div>
+                        ))
+                    ) : (
+                        <div>Загрузка...</div>
+                    )}
+                </div>
             </div>
 
             <div className={styles.pagination}>
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    ←
+                    ❮
                 </button>
                 <span>
-                    Страница {currentPage} из {totalPages}
+                    {currentPage}/{totalPages}
                 </span>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    →
+                    ❯
                 </button>
             </div>
         </div>

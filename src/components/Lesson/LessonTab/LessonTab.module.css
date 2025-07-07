@@ -1,20 +1,55 @@
 .tab {
     display: flex;
     width: 80vw;
+    max-height: 97%;
     flex-direction: column;
+    border: 1px solid var(--sub-color);
+    margin: 1%;
+    gap: 10px;
+}
+
+.openList {
+    height: 27px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--subbackground-color);
+    padding: 1%;
+    justify-content: space-between;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.openList input,
+.openList select {
+    padding: 5px;
+    border: 1px solid var(--sub-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-size: 1.5rem;
+    margin-left: 0;
+    box-sizing: border-box;
+}
+
+.openList input:focus,
+.openList select:focus
+{
+    border: 1px solid dodgerblue;
+    outline: none;
 }
 
 .addButton {
-    width: 20vw;
-    height: 15vh;
-    margin: 2%;
-    font-size: 7rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 3rem;
 }
 
-.addButton:active {
+.addButton:hover {
     background: transparent;
+    color: dodgerblue;
 }
 
 .title {

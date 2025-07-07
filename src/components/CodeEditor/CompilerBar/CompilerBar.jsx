@@ -5,6 +5,7 @@ import styles from "./CompilerBar.module.css"
 import TestResult from '../../TestResult/TestResult';
 import Modal from '../../Modal/Modal';
 import MarkdownView from '../../Lesson/ContentBlock/MarkdownView/MarkdownView';
+import Documentation from '../Documentation/Documentation';
 
 import fullscreenIcon from '/src/assets/icons/fullscreen.svg';
 import windowedIcon from '/src/assets/icons/windowed.svg';
@@ -13,6 +14,10 @@ import executeIcon from '/src/assets/icons/execute.svg';
 import testIcon from '/src/assets/icons/test.svg';
 import stopIcon from '/src/assets/icons/stop.svg';
 import generateIcon from '/src/assets/icons/generate.svg';
+import saveIcon from '/src/assets/icons/save.svg';
+import uploadIcon from '/src/assets/icons/upload.svg';
+import downloadIcon from '/src/assets/icons/download.svg';
+import addFileIcon from '/src/assets/icons/add_file.svg';
 
 import fullscreenIconDark from '/src/assets/icons/dark/fullscreen.svg';
 import windowedIconDark from '/src/assets/icons/dark/windowed.svg';
@@ -21,8 +26,16 @@ import executeIconDark from '/src/assets/icons/dark/execute.svg';
 import testIconDark from '/src/assets/icons/dark/test.svg';
 import stopIconDark from '/src/assets/icons/dark/stop.svg';
 import generateIconDark from '/src/assets/icons/dark/generate.svg';
+import saveIconDark from '/src/assets/icons/dark/save.svg';
+import uploadIconDark from '/src/assets/icons/dark/upload.svg';
+import downloadIconDark from '/src/assets/icons/dark/download.svg';
+import addFileIconDark from '/src/assets/icons/dark/add_file.svg';
 
-const CompilerBar = ({task_id, task_type, user_id, code, onGenerateClick, argValues, setVariables, setLog,  isFullscreen, onFullscreenClick, onInfoClick, infoRef}) => {
+const CompilerBar = ({
+    task_id, task_type, user_id, code, setCode, filename, setFilename, 
+    onGenerateClick, argValues, setVariables, setLog, isFullscreen, 
+    onFullscreenClick, onInfoClick, onSaveCode, onNewFileClick, disableSave, infoRef
+}) => {
     const [taskId, setTaskId] = useState(task_id);
     const [fileId, setFileId] = useState(null);
     const {isDark} = useContext(Context);
@@ -115,6 +128,7 @@ const CompilerBar = ({task_id, task_type, user_id, code, onGenerateClick, argVal
     }, [taskId, activeTaskType]);
 
     const handleCompileClick = async () => {
+        console.log(user_id);
         try {
             const response = await axios.post('/compile', {
                 code: code,
@@ -180,9 +194,61 @@ const CompilerBar = ({task_id, task_type, user_id, code, onGenerateClick, argVal
             console.error("Cancer error:", error);
         }
     }
+
+    const handleDownloadClick = () => {
+        const blob = new Blob([code], {type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const handleUploadClick = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.h, .hpp, .c, .cpp, .cc, .cxx, .hh, .hxx, .inl';
+
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const filename = file.name.replace(/\.[^/.]+$/, ".cpp");
+            setFilename(filename);
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setCode(event.target.result);
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    };
+
+    const handleRemoveResultDataItem = (index) => {
+        const newData = resultData.splice(index, 1);
+        setResultData(newData);
+    }
     
     return (
         <div className={styles.bar}>
+            <button title="Создать файл" onClick={onNewFileClick}>
+                <img src={isDark ? addFileIconDark : addFileIcon} alt=""/>
+            </button>
+            <button title="Загрузить файл" onClick={handleUploadClick}>
+                <img src={isDark ? downloadIconDark : downloadIcon} alt=""/>
+            </button>
+            <button title="Скачать файл" onClick={handleDownloadClick}>
+                <img src={isDark ? uploadIconDark : uploadIcon} alt=""/>
+            </button>
+            <button title="Сохранить файл" disabled={disableSave} onClick={onSaveCode}>
+                <img src={isDark ? saveIconDark : saveIcon} alt=""/>
+            </button>
+            <div className={styles.delimiter}/>
             <button title="Сборка" onClick={handleCompileClick}>
                 <img src={isDark ? compileIconDark : compileIcon} alt=""/>
             </button>
@@ -195,22 +261,30 @@ const CompilerBar = ({task_id, task_type, user_id, code, onGenerateClick, argVal
             <button title="Отмена" onClick={handleCancelClick}>
                 <img src={isDark ? stopIconDark : stopIcon } alt=""/>
             </button>
-            <button ref={infoRef} className={styles.buttonManual} title="Информация" onClick={onInfoClick}>
-                i
-            </button>
+            <div className={styles.delimiter}/>
             <button title="Сгенерировать" onClick={onGenerateClick}>
                 <img src={isDark ? generateIconDark : generateIcon } alt=""/>
+            </button>
+            <div className={styles.delimiter}/>
+            <p className={styles.filename}>Файл: {filename}</p>
+            <div className={styles.delimiter}/>
+            <button ref={infoRef} className={styles.buttonManual} title="Информация" onClick={onInfoClick}>
+                i
             </button>
             <button className={styles.buttonManual} title="Документация" onClick={() => setManualOpen(true)}>
                 ?
             </button>
-            <button style={{marginLeft: "auto"}} title={isFullscreen ? "Оконный режим" : "Полный экран" } onClick={onFullscreenClick}>
+            <div className={styles.delimiter}/>
+            <button title={isFullscreen ? "Оконный режим" : "Полный экран" } onClick={onFullscreenClick}>
                 {isFullscreen ? <img src={isDark ? windowedIconDark : windowedIcon } alt=""/> : <img src={isDark ? fullscreenIconDark : fullscreenIcon } alt=""/>}
             </button>
-            <TestResult open={resultOpen} onCloseClick={() => setResultOpen(false)} data={resultData}/>
-            <Modal open={manualOpen} onCloseClick={() => setManualOpen(false)}>
-                <MarkdownView content={"# Потом добавить"}/>
-            </Modal>
+            <TestResult 
+                open={resultOpen} 
+                onCloseClick={() => setResultOpen(false)} 
+                data={resultData}
+                onRemoveDataItem={handleRemoveResultDataItem}
+            />
+            <Documentation open={manualOpen} onClose={() => setManualOpen(false)}/>
         </div>
     ) 
 }

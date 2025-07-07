@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MatrixView.module.css';
-import axios from "/src/config/axiosLessonsConfig";
+import axios from "/src/config/axiosUsersConfig";
 
 const MatrixView = ({ filename, path = 'default' }) => {
     const [currentPageRow, setCurrentPageRow] = useState(1);
@@ -108,43 +108,45 @@ const MatrixView = ({ filename, path = 'default' }) => {
                 />
             </div>
 
-            <div className={styles.matrixContainer}>
-                {data ? (
-                    data.map((row, rowIndex) => (
-                        <div key={rowIndex} className={styles.matrixRow}>
-                            {row.map((item, colIndex) => (
-                                <div key={colIndex} className={styles.matrixItem}>
-                                    {item}
-                                </div>
-                            ))}
-                        </div>
-                    ))
-                ) : (
-                    <div>Загрузка...</div>
-                )}
+            <div className={styles.matrixContainerWrapper}>
+                <div className={styles.matrixContainer}>
+                    {data ? (
+                        data.map((row, rowIndex) => (
+                            <div key={rowIndex} className={styles.matrixRow}>
+                                {row.map((item, colIndex) => (
+                                    <div key={colIndex} className={styles.matrixItem}>
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
+                        ))
+                    ) : (
+                        <div>Загрузка...</div>
+                    )}
+                </div>
             </div>
 
             <div className={styles.paginationRow}>
                 <button onClick={handlePrevPageRow} disabled={currentPageRow === 1}>
-                    ←
+                    ❮
                 </button>
                 <span>
-                    Страница {currentPageRow} из {totalPagesRow}
+                    {currentPageRow}/{totalPagesRow}
                 </span>
                 <button onClick={handleNextPageRow} disabled={currentPageRow === totalPagesRow}>
-                    →
+                    ❯
                 </button>
             </div>
 
             <div className={styles.paginationCol}>
-                <button onClick={handlePrevPageCol} disabled={currentPageCol === 1}>
-                    ↑
+                <button style={{transform: "rotate(270deg)"}} onClick={handlePrevPageCol} disabled={currentPageCol === 1}>
+                    ❯
                 </button>
                 <span>
-                    Страница {currentPageCol} из {totalPagesCol}
+                    {currentPageCol}/{totalPagesCol}
                 </span>
-                <button onClick={handleNextPageCol} disabled={currentPageCol === totalPagesCol}>
-                    ↓
+                <button style={{transform: "rotate(90deg)"}} onClick={handleNextPageCol} disabled={currentPageCol === totalPagesCol}>
+                    ❯  
                 </button>
             </div>
         </div>

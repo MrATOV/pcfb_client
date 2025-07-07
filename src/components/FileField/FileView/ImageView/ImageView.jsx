@@ -1,40 +1,37 @@
 import { useState, useEffect } from 'react';
-import axios from '/src/config/axiosLessonsConfig';
+import styles from './ImageView.module.css';
 
 const ImageView = ({ url }) => {
     const [scale, setScale] = useState(1);
     const [imageUrl, setImageUrl] = useState(null)
-
+    console.log(url);
     useEffect(() => {
         if (url) {
             setImageUrl(url);
+            setScale(1);
         }
     }, [url]);
 
     const handleZoomIn = () => {
-        setScale(scale * 1.2);
+        setScale(prev => prev * 1.2);
     };
 
     const handleZoomOut = () => {
-        setScale(scale / 1.2);
+        setScale(prev => Math.max(prev / 1.2, 1));
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <div style={{ marginBottom: '10px' }}>
-                <button onClick={handleZoomIn} style={{ marginRight: '10px' }}>Увеличить</button>
-                <button onClick={handleZoomOut}>Уменьшить</button>
+        <div className={styles.wrapper}>
+            <div className={styles.buttons}>
+                <button title="Увеличить" onClick={handleZoomIn}>+</button>
+                <span>🔍︎</span>
+                <button title="Уменьшить" onClick={handleZoomOut}>–</button>
             </div>
-            <img
-                src={imageUrl}
-                alt="Просмотр изображения"
-                style={{
-                    transform: `scale(${scale})`,
-                    transition: 'transform 0.25s ease',
-                    maxWidth: '100%',
-                    height: 'auto'
-                }}
-            />
+            <div className={styles.imageContainer}>
+                <div className={styles.image} style={{transform: `scale(${scale})`}}>
+                    <img src={imageUrl} alt="Изображение"/>
+                </div>
+            </div>
         </div>
     );
 };

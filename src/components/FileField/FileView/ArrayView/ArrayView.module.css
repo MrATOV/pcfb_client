@@ -2,53 +2,64 @@
     font-family: Arial, sans-serif;
     margin: 0 auto;
     padding: 20px;
-  }
+    width: 50vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.arrayContainerWrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
   
-  .arrayContainer {
+.arrayContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     gap: 10px;
     margin-bottom: 20px;
-  }
+}
   
-  .arrayItem {
+.arrayItem {
     padding: 10px;
     background-color: var(--sub-color);
     border-radius: 4px;
     text-align: center;
     font-size: 16px;
-  }
+}
   
-  .pagination {
+.pagination {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-  }
+}
   
-  .pagination button {
+.pagination button {
     padding: 8px 16px;
-    background-color: dodgerblue;
-    color: white;
+    background: transparent;
+    color: var(--text-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
-  .pagination button:hover {
+.pagination button:hover {
     background-color: #555;
-  }
+}
   
-  .pagination button:disabled {
-    background-color: var(--sub-color);
+.pagination button:disabled {
+    filter: grayscale(100%);
     cursor: not-allowed;
-  }
+}
   
-  .pagination span {
+.pagination span {
     font-size: 14px;
     color: var(--text-color);
-  }
+}
 
-  .limitSelector {
+.limitSelector {
     margin-bottom: 20px;
 }
 
@@ -66,6 +77,6 @@
 }
 
 .limitSelector input[type="number"] {
-  border: 1px solid dodgerblue;
-  outline: none;
+    border: 1px solid dodgerblue;
+    outline: none;
 }

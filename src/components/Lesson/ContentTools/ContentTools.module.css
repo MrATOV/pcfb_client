@@ -1,0 +1,11 @@
+.contentTools {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: calc(90% - 8px);
+    margin: 10px 8px 10px 0;
+}
+
+.contentTools button {
+    margin: 0;
+}

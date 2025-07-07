@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90vw;
+    height: 85vh;
+}
+
+.imageContainer {
+    overflow: auto;
+    width: 90vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    display: inline-block;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.buttons button {
+    font-size: 1.5rem;
+    background: transparent;
+    color: var(--text-color);
+}
+
+.buttons button:hover {
+    background-color: var(--sub-color);
+}

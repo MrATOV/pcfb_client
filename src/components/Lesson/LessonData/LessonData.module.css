@@ -1,43 +1,21 @@
-.container {
-    width: 70vw;
-    margin: auto;
-}
-
-.item {
-    width: 100%;
-    border: 1px solid var(--sub-color);
-    margin-bottom: 1%;
-    box-sizing:border-box;
-    height: auto;
-    padding: 1%;
-}
-
-.previewItem {
-    width: 100%;
-    margin-bottom: 1%;
-    height: auto;
-    padding: 1%;
-}
-
-.itemUtils {
-    border-bottom: 1px solid var(--sub-color);
+.lessonData {
+    height: 100%;
     display: flex;
-    margin: -1% -1% 1% -1%;
+    flex-direction: column;
 }
 
-.itemUtils button {
-    background-color: transparent;
+.generalPanel {
+    display: flex;
+    border-bottom: 1px solid var(--sub-color);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+    height: 57px;
+    align-items: center;
 }
 
-.itemUtils button:hover {
-    background-color: var(--sub-color);
-}
-
-.itemUtils button:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-}
-
-.itemUtils button img {
-    margin: 0;
+.contentContainer {
+    display: flex;
+    flex: 1;
+    min-height: 0;
 }

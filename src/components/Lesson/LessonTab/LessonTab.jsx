@@ -4,13 +4,18 @@ import styles from "./LessonTab.module.css";
 import Dialog from "../../Dialog/Dialog";
 import { useLessonActions } from "../useLessonActions";
 import { useNavigate } from 'react-router-dom';
+import Paginator from '../../Paginator/Paginator';
 
 const LessonTab = ({role}) => {
-    const [openLessonList, setOpenLessonList] = useState(false);
+    const [openLessonList, setOpenLessonList] = useState(true);
+    const [filterTitle, setFilterTitle] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(100);
 
     const navigate = useNavigate();
     const {
         authLessonList,
+        authCount,
         dialogOpen,
         title,
         private_access,
@@ -25,27 +30,61 @@ const LessonTab = ({role}) => {
     } = useLessonActions();
 
     useEffect(() => {
-        fetchGetLessonListOwn();
-    }, []);
+        fetchGetLessonListOwn(filterTitle, authCount, currentPage, pageSize);
+    }, [filterTitle, currentPage]);
+
+    useEffect(() => {
+        fetchGetLessonListOwn(filterTitle, null, currentPage, pageSize);
+    }, [pageSize]);
     
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const handlePageSizeChange = (e) => {
+        setPageSize(Number(e.target.value));
+        setCurrentPage(1);
+    };
+    
+    const totalPages = Math.ceil(authCount / pageSize) || 1;
+
     return (
         <div className={styles.tab}>
-            <button onClick={() => setOpenLessonList(!openLessonList)}>{openLessonList ? "▼" : "⯈"} Авторские уроки</button>
+            <div className={styles.openList}>
+                <span style={{width: "10%"}} onClick={() => setOpenLessonList(!openLessonList)}>{openLessonList ? "▼" : "▶"}</span> 
+                <span style={{flex: 1}}>Авторские уроки</span>
+                {openLessonList && authLessonList.length > 0 &&
+                <>
+                    <input 
+                        type="text"
+                        value={filterTitle}
+                        onChange={(e) => setFilterTitle(e.target.value)}
+                        placeholder="Поиск по названию"
+                    />
+                    <Paginator 
+                        page={currentPage}
+                        onPageChange={handlePageChange}
+                        pageSize={pageSize}
+                        onPageSizeChange={handlePageSizeChange}
+                        totalPages={totalPages}
+                    />
+                </>
+                }
+                {role === 'teacher' && <button className={styles.addButton} onClick={(e) => {e.stopPropagation(); setDialogOpen(true)}}>+</button>}
+            </div>
             {openLessonList && authLessonList.length > 0 && authLessonList.map((item) => (
                 <LessonItem 
                     key={item.id} 
                     data={item} 
-                    onClick={() => navigate(`/lesson/${item.id}`)}
+                    onClick={() => navigate(`/lesson/${item.id}/${item.title}`)}
                     onDeleteClick={() => fetchDeleteLesson(item.id)}
                 />
             ))}
             {role === 'teacher' && 
-            <>
-                <button className={styles.addButton} onClick={() => setDialogOpen(true)}>+</button>
                 <Dialog 
                     title="Создание урока"
                     open={dialogOpen} 
-                    onYesClick={() => fetchAddLesson()} 
+                    onYesClick={() => fetchAddLesson(title, private_access, description)} 
                     onNoClick={() => setDialogOpen(false)}
                 >
                     <span>Введите название урока</span>
@@ -70,7 +109,7 @@ const LessonTab = ({role}) => {
                         placeholder="Описание урока (необязательно)"
                     />
                 </Dialog>
-            </>}
+            }
         </div>
     )
 };

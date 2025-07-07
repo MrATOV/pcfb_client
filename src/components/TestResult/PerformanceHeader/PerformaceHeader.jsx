@@ -37,24 +37,23 @@ const PerformanceHeader = ({title, testName, setTestName, onSaveClick, onGenerat
             ) : (
                 <h1>{title}</h1>
             )}
-            
             <div className={styles.actions}>
                 <button 
                     title="Создать отчет" 
                     onClick={onGenerateClick}
-                >
+                    >
                     <img src={isDark ? reportIconDark : reportIcon} alt="Отчет" />
                 </button>
                 <button 
                     title={showChart ? "Показать таблицу" : "Показать график"} 
                     onClick={() => setShowChart(!showChart)}
                     className={styles.toggleButton}
-                >
+                    >
                     {showChart ? 
                         <img src={isDark ? tableIconDark : tableIcon} alt="Таблица"/>
                     : 
-                        <img src={isDark ? chartIconDark : chartIcon} alt="График"/>
-                    }
+                    <img src={isDark ? chartIconDark : chartIcon} alt="График"/>
+                }
                 </button>
             </div>
         </div>

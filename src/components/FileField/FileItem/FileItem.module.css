@@ -1,18 +1,10 @@
 .item {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 160px;
     position: relative;
-    margin: 12px;
-    transition: all 0.3s ease;
+    transition: all 0.3 ease;
     box-sizing: border-box;
-    border: 1px solid transparent;   
-}
-
-.item:hover {
-    border: 1px solid var(--text-color);
+    border: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .item.active {
@@ -20,58 +12,125 @@
     border: 1px solid dodgerblue;
 }
 
-.item img {
+.fileLogo {
     width: 90%;
     height: auto;
-    object-fit: cover;
-    padding-top: 25px;
 }
 
-.item .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    word-break: break-word;
-    padding-bottom: 25px;
+.title {
+    font-weight: bolder;
+    font-size: 1.1rem;
+    margin: 8px 0;
 }
 
 .deleteButton {
-    position: absolute;
-    top: 15%;
-    right: 19%;
-    background-color: transparent;
-    color: dodgerblue;
+    background: transparent;
     font-weight: bolder;
-    transition: all 0.2s ease;
-    padding: 0;
-    margin: 0;
-}
-
-.deleteButton:hover {
-    color: red;
-    background-color: transparent;
 }
 
 .selectButton {
-    position: absolute;
-    top: 15%;
-    left: 19%;
-    background-color: #eee;
-    color: dodgerblue;
     font-weight: bolder;
-    transition: all 0.2s ease;
-    padding: 0;
-    margin: 0;
-    width: 30px;
-    height: 30px;
-    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.7rem;
+    border-radius: 50%;
 }
 
-.selectButton:hover {
-    color: #eee;
-    border: 1px solid #eee;
-    background-color: transparent;
+.gridMode {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    border: 1px solid transparent;
+    width: 200px;
+    height: 300px;
+    margin: 12px;
+}
+
+.gridMode:hover {
+    border: 1px solid var(--text-color);
+}
+
+.gridMode .fileLogo {
+    width: auto;
+    height: 230px;
+    margin-top: 10px;
+}
+
+.gridMode .title {
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gridMode .deleteButton {
+    position: absolute;
+    top: 6%;
+    right: 14%;
+    color: dodgerblue;
+}
+
+.gridMode .selectButton {
+    position: absolute;
+    top: 6%;
+    left: 14%;
+    background-color: #eee;
+    border-radius: 50%;
+    color: dodgerblue;
+}
+
+.gridMode .selectButton:hover {
+    background: transparent;
+    color: #333;
+}
+
+.tableMode {
+    display: flex;
+    align-items: center;
+    width: 800px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    margin: 0;
+    background: var(--background);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tableMode:hover {
+    background-color: dodgerblue;
+}
+
+.tableMode .fileLogo {
+    width: auto;
+    height: 50px;
+    padding: 0;
+    margin-right: 20px;
+}
+
+.tableMode .title {
+    flex: 1;
+    margin: 0 20px 0 0;
+    text-align: left;
+}
+
+.tableMode .deleteButton {
+    color: var(--text-color);
+}
+
+.tableMode .selectButton {
+    background: transparent;
+    color: var(--text-color);
+}
+
+.tableMode .selectButton:hover {
+    border: 1px solid var(--text-color);
+}
+
+.gridMode .deleteButton:hover,
+.tableMode .deleteButton:hover {
+    background: transparent;
+    color: red;
 }
